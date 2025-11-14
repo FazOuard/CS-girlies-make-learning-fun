@@ -8,9 +8,12 @@ import right from "../assets/img/right.png";
 import femaleIdle from "../assets/img/femaleIdle.png";
 import mapData from "../assets/map/house.json";
 import roomStudyMap from "../assets/map/roomstudy.json";
+import Header from "../components/Header";
+import { useXp } from "../components/XpContext.jsx";
 
 const Game = () => {
   const canvasRef = useRef(null);
+  const { addXp } = useXp();
   const navigate = useNavigate();
 
 useEffect(() => {
@@ -277,7 +280,7 @@ useEffect(() => {
           }, step);
           dialogDotsTimer = null;
         }, 300);
-        return; // don't check other interactables
+        return;
       }
 
       for (const it of interactables) {
@@ -289,7 +292,9 @@ useEffect(() => {
         if (dist <= interactRange) {
           const color = it.color;
           if (color === 'purple') {
+            
             dialogFullText = 'Leaving...';
+            addXp(1); 
             dialogShownText = '...';
             dialogActive = true;
             if (dialogDotsTimer) clearTimeout(dialogDotsTimer);
@@ -332,6 +337,7 @@ useEffect(() => {
         ];
 
           if (color === 'yellow') {
+            addXp(1);  
             const randomIndex = Math.floor(Math.random() * motivationalQuotes.length);
             dialogFullText = motivationalQuotes[randomIndex];
           }
@@ -352,7 +358,7 @@ useEffect(() => {
           dialogDotsTimer = setTimeout(() => {
             dialogShownText = '';
             let i = 0;
-            const step = 60; // ms per char
+            const step = 60; 
             dialogTypeTimer = setInterval(() => {
               dialogShownText += dialogFullText[i] || '';
               i++;
@@ -605,10 +611,12 @@ useEffect(() => {
 
 
   return (
-    <canvas
-      ref={canvasRef}
-      className="border-2 border-gray-700 rounded-lg"
-    />
+    
+      <canvas
+        ref={canvasRef}
+        className="border-2 border-gray-700 rounded-lg"
+      />
+   
   );
 };
 
