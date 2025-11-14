@@ -6,7 +6,9 @@ I'm going to explain to you what packages I used, how I made it work and the con
 Built on **ReactJS** (with Vite for speed and TailwindCSS for style).  
 Here’s the super-fast, no-nonsense install:
 
-`npm create vite@latest frontend`
+```bash
+npm create vite@latest frontend
+
 
 Pick: React → JavaScript → [smash Enter until you name it "frontend"]
 
