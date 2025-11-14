@@ -1,11 +1,6 @@
-# 👾 Welcome to CS Girlies Hackathon Repo! 👾
+# Hello Welcome to the cs girlies repo hackathon <br />
 
-Ready for some pixel-powered learning and adventure?  
-Let’s hit **Start** and see what this project is packing under the hood…
-
----
-
-## 🚀 The Stack
+I'm going to explain to you what packages I used, how I made it work and the conecpt behind my code. <br />
 
 ### **Frontend First!**
 Built on **ReactJS** (with Vite for speed and TailwindCSS for style).  
@@ -35,7 +30,7 @@ You’ll also create `postcss.config.js` and `tailwind.config.js` (don’t skip 
 
 ---
 
-## 🗂️ Folder Map
+##  Folder Map
 
 - **components/** – Reusable pieces for layout and game bits.
 - **pages/** – Where cool things happen (main views).
@@ -47,7 +42,7 @@ _Yes, you can use Tiled to create not just images, but smart maps that the code 
 
 ---
 
-## 🎮 Game Concept
+##  Game Concept
 
 - **Start Screen:** Pick your character, hit start, and you appear centered on the map.
 - **Characters:** Each direction (front/back/left/right) has its own sprite, so your player walks and animates like a classic RPG. NPCs (like your sister) can have their own little animation cycles!
@@ -55,21 +50,5 @@ _Yes, you can use Tiled to create not just images, but smart maps that the code 
   **Red zones?** Invisible walls, no trespassing!
 - **Interaction:** Hit 'E' by different spots to trigger advice, jokes, or, uh, sisterly scolding.
 - **Camera:** Always follows your character, keeping the action centered—nostalgia pixel-style!
-
----
-
-## 🤩 Why It’s Cool
-
-- Choose your hero (girl-powered pixel style!).
-- Animations, maps, and classic color-coded interaction zones.
-- JSON-powered layouts, so *anyone* with Tiled can make new levels.
-- Built with modern tools, easy to expand.
-
----
-
-So what are you waiting for?  
-🎉 Hack, code, build, and may your repo **Level Up!** 🎉
-
----
 
 <sup>Any questions? Try the 'E' key in the game or read the code for more surprises!</sup>
