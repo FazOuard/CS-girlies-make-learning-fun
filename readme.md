@@ -15,4 +15,8 @@ npm install -D tailwindcss postcss autoprefixer<br />
 
 And I get them installed  but it's not all, I have to create two js files, one for postcss and one for tailwindcss, and then implement tailwind in index.css... and then it might work!<br />
 
-I have three folders : components, pages and assets. Inside assets, two folders : one for images and one for maps: to explain then pretty much it.. there are json files that I downloaded from the Tiled plateform, it's an editor and creator plateform for pixelided images.. All I have to do is create the image and then create areas that the character shouldn't go beyond for example red and download the file into json file instead of png that way my code will take into consideration red areas components.. that will have different format in the matrix!
+I have three folders : components, pages and assets. Inside assets, two folders : one for images and one for maps: to explain then pretty much it.. there are json files that I downloaded from the Tiled plateform, it's an editor and creator plateform for pixelided images.. All I have to do is create the image and then create areas that the character shouldn't go beyond for example red and download the file into json file instead of png that way my code will take into consideration red areas components.. that will have different format in the matrix! <br/>
+
+The idea: First main Page I choose my character and I start the game..Let me explain to you hoe it works, the camera is fully sized on the character at the position I had put it on at first..<br />
+The character has actually 3 formats in each angle so that I can make the animation, for the sister npc character it's going to have an animation in her place.. <br />
+Ok there is the mapping concept.. In a way I created pixeled blocks each with a color name and It each shows something when clicking on 'E'.. But for red it shows the boundaries that my character shouldn't go beyond! 
