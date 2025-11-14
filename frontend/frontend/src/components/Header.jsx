@@ -27,7 +27,7 @@ const Header = () => {
     if (level > prevLevel.current) {
       setShowPopup(true);
       prevLevel.current = level;
-      // Auto-close popup after 2 seconds
+     
       const timer = setTimeout(() => setShowPopup(false), 2000);
       return () => clearTimeout(timer);
     }
@@ -44,7 +44,7 @@ const Header = () => {
         padding: "16px"
       }}
     >
-      {/* XP Progress Bar */}
+      
       <div className="flex items-center mb-2">
         <img
           src={STAR_IMG}
@@ -93,7 +93,7 @@ const Header = () => {
         <span style={retroFont}>Level {level}</span>
       </div>
       
-      {/* Popup Window */}
+     
       {showPopup && (
         <div
           style={{
