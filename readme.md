@@ -8,7 +8,7 @@ Here’s the super-fast, no-nonsense install:
 
 ```bash
 npm create vite@latest frontend
-
+```
 
 Pick: React → JavaScript → [smash Enter until you name it "frontend"]
 
@@ -16,16 +16,17 @@ Pick: React → JavaScript → [smash Enter until you name it "frontend"]
 
 ### **Essential Power-Ups:**
 Install these for full feature mode:
+```bash
 npm install react-router-dom
 npm install lucide-react
 npm install @tsparticles/react @tsparticles/engine @tsparticles/slim
-
+```
 
 And for **Tailwind magic:**
-
+```bash
 npm install -D @tailwindcss/postcss
 npm install -D tailwindcss postcss autoprefixer
-
+```
 text
 
 You’ll also create `postcss.config.js` and `tailwind.config.js` (don’t skip these!), then wire up Tailwind in your `index.css` – boom, done, let’s get creative!
