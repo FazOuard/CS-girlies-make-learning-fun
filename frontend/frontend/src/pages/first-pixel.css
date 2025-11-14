@@ -1,8 +1,8 @@
 .pixel-bg {
   background: repeating-linear-gradient(
     135deg,
-    #c2dfff 0 6px,
-    #b2cff0 6px 12px
+    #ffddc2 0 6px,
+    #f0c7b2 6px 12px
   );
   font-family: 'Press Start 2P', monospace !important;
   min-height: 100vh;
@@ -23,7 +23,7 @@ html, body {
 }
 
 .pixel-window {
-  background: #e6eaff;
+  background: #fff8f3;
   border: 7px solid #313144;
   box-shadow: 0 0 0 6px #fff, 0 10px 0 0 #222, 0 0 0 12px rgba(55, 46, 38, 0.68) inset;
   border-radius: 0.5em;
