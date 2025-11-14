@@ -1,4 +1,6 @@
 # Hello Welcome to the cs girlies repo hackathon <br />
+The hackathon aim is to make learning fun, so I decided to create a video game that uses LLM to understand the user's notes. 
+
 
 I'm going to explain to you what packages I used, how I made it work and the concept behind my code. <br />
 
