@@ -47,7 +47,8 @@ You’ll also create `postcss.config.js` and `tailwind.config.js` (don’t skip 
     - **img/** → Character sprites, backgrounds, all your visual loot.
     - **map/** → JSON files from **Tiled**. Make your own pixel maps, paint collision zones (like “red” for barriers), export as JSON and drop them here.
 
-_Yes, you can use Tiled to create not just images, but smart maps that the code reads: red zones = “no-go”, other colors can trigger events, popups, whatever you want!_
+
+_The link to the pixel art and icons, I used, is : https://kamisama887.itch.io/lorenz-fries-school-horror_
 
 ---
 
@@ -61,12 +62,12 @@ _Yes, you can use Tiled to create not just images, but smart maps that the code 
 - **Camera:** Always follows your character, keeping the action centered—nostalgia pixel-style!
 
 
-Same goes for the rest of the frontend pages.
+Same goes for the rest of the frontend pages: The character's house, the library and the forest.
 
 
 
-<sup>Any questions? Try the 'E' key in the game or read the code for more surprises!</sup>
-
+- **The header:**
+The header is composed of the XP levels which get added when the user achieves some operations. When the bar is completed the level goes up. I added this category because it will let the user get more attracted to using the game.
 
 
 ## **Now the Backend!**

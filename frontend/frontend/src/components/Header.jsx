@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useXp } from "./XpContext";
 import diamond from '../assets/img/diamond.png';
-import star from '../assets/img/star.png';
+import star from '../assets/img/starr.png';
 
 const STAR_IMG = star;
 const DIAMOND_IMG = diamond;
