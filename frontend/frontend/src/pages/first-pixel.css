@@ -1,0 +1,126 @@
+.pixel-bg {
+  background: repeating-linear-gradient(
+    135deg,
+    #c2dfff 0 6px,
+    #b2cff0 6px 12px
+  );
+  font-family: 'Press Start 2P', monospace !important;
+  min-height: 100vh;
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.pixel-full {
+  width: 100vw;
+  height: 100vh;
+}
+
+.pixel-window {
+  background: #e6eaff;
+  border: 7px solid #313144;
+  box-shadow: 0 0 0 6px #fff, 0 10px 0 0 #222, 0 0 0 12px rgba(55, 46, 38, 0.68) inset;
+  border-radius: 0.5em;
+  padding: 2em 2em;
+  min-width: 400px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.pixel-title {
+  font-size: 1.6em;
+  text-align: center;
+  color: #293657;
+  letter-spacing: 2px;
+  margin-bottom: 0.6em;
+}
+
+.pixel-subtitle {
+  font-size: 1em;
+  color: #457;
+  margin-bottom: 2em;
+}
+
+.pixel-btn {
+  display: block;
+  background: #fff;
+  border: 3px solid #393a57;
+  font-family: 'Press Start 2P', monospace;
+  color: #293657;
+  font-size: 1em;
+  padding: 0.6em 1.4em;
+  margin: 0.6em auto 0.1em auto;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 1px #7b8a8b, 0 0 0 2px #fff inset;
+  transition: background 0.12s, box-shadow 0.12s;
+  border-radius: 0.25em;
+}
+.pixel-btn:active {
+  box-shadow: 1px 1px 0 0 #546;
+}
+.pixel-btn-gray {
+  background: #e4e4e4 !important;
+  color: #888 !important;
+  border-color: #555 !important;
+}
+.pixel-label {
+  color: #444;
+  font-size: .8em;
+  padding-top: 10px;
+  text-align: left;
+  margin-bottom: 0.4em;
+  margin-top: 1.1em;
+  display: block;
+}
+.pixel-input {
+  border: 2px solid #444;
+  background: #f9f9f1;
+  font-size: 1em;
+  font-family: 'Press Start 2P', monospace;
+  outline: none;
+  padding: 0.5em 1em;
+  border-radius: 0.25em;
+}
+.pixel-character-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #dfdfef;
+  border: 3px solid #222;
+  border-radius: 0.3em;
+  padding: 1em;
+  margin-bottom: 1.5em;
+  box-shadow: 1.5px 2px 0 1px #657;
+}
+.pixel-character-card img{
+  width:80px;
+  height:150px;
+}
+.pixel-sprite-big {
+  width: 76px;
+  height: 76px;
+  image-rendering: pixelated;
+  margin-bottom: 0.7em;
+}
+.pixel-charname {
+  font-size: 1em;
+  color: #232;
+  margin: 0.1em 0 0.2em 0;
+  font-family: 'Press Start 2P', monospace;
+  text-align: center;
+}
+.pixel-chardesc {
+  font-size: 0.7em;
+  color: #444;
+  font-family: 'Press Start 2P', monospace;
+  text-align: center;
+}
