@@ -1,12 +1,12 @@
 # Hello Welcome to the cs girlies repo hackathon <br />
 
-I'm going to explain to you what packages I used, how I made it work and the conecpt behind my code. <br />
+I'm going to explain to you what packages I used, how I made it work and the concept behind my code. <br />
 
 ### **Frontend First!**
 Built on **ReactJS** (with Vite for speed and TailwindCSS for style).  
 Here’s the super-fast, no-nonsense install:
 
-npm create vite@latest frontend
+`npm create vite@latest frontend`
 
 Pick: React → JavaScript → [smash Enter until you name it "frontend"]
 
