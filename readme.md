@@ -15,6 +15,10 @@ Pick: React → JavaScript → [smash Enter until you name it "frontend"]
 
 
 ### **Essential Power-Ups:**
+Once you get into the "frontend" folder with:
+```bash
+cd ./frontend
+```
 Install these for full feature mode:
 ```bash
 npm install react-router-dom
@@ -53,5 +57,5 @@ _Yes, you can use Tiled to create not just images, but smart maps that the code 
   **Red zones?** Invisible walls, no trespassing!
 - **Interaction:** Hit 'E' by different spots to trigger advice, jokes, or, uh, sisterly scolding.
 - **Camera:** Always follows your character, keeping the action centered—nostalgia pixel-style!
-
+Same concept for the rest of the frontend pages.
 <sup>Any questions? Try the 'E' key in the game or read the code for more surprises!</sup>
