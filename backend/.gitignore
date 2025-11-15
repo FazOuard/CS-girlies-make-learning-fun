@@ -54,3 +54,11 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.bak
+ 
+# Chroma / DBs
+chroma_dbs/
+*.sqlite3
+
+# Local model files
+*.gguf
+models/
