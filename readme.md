@@ -4,12 +4,12 @@ The hackathon aim is to make learning fun, so I decided to create a video game t
 
 I'm going to explain to you what packages I used, how I made it work and the concept behind my code. <br />
 
-_All the commands shown here are run from the Windows PowerShell, right inside VS Code._
 
 My project is made of two main parts:  
 - **Frontend:** for all the UI/UX (the parts the user interacts with),
 - **Backend:** for all the technical code running behind the scenes.
 
+_All the commands shown here are run from the Windows PowerShell, right inside VS Code._
 
 ## **Frontend First!**
 Built on **ReactJS** (with Vite for speed and TailwindCSS for style).  
