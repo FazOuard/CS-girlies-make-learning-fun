@@ -39,12 +39,13 @@ text
 
 You’ll also create `postcss.config.js` and `tailwind.config.js` (don’t skip these!), then wire up Tailwind in your `index.css` – boom, done, let’s get creative!
 
----
+
 
 If you don't want to get into all this mess, just clone the repository into your device and enter:
 ```bash
 npm install 
 ```
+---
 
 ###  Folder Map
 
