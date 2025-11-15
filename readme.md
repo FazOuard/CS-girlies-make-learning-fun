@@ -72,15 +72,24 @@ _The link to the pixel art and icons, I used, is : https://kamisama887.itch.io/l
 
 Same goes for the rest of the frontend pages: The character's house, the library and the forest.
 
+- **The XP levels:**
+The game use XP system. You earn XP by completing certain actions, whenever you fill up your XP bar, your level goes up!  
+I added XP and leveling to make things more rewarding and keep players coming back for more. This idea was inspired by Luis von Ahn’s TED talk, CEO of Duolingo: [https://www.youtube.com/watch?v=P6FORpg0KVo](https://www.youtube.com/watch?v=P6FORpg0KVo)
 
-
-- **The header:**
-The header is composed of the XP levels which get added when the user achieves some operations. When the bar is completed the level goes up. I added this category because it will let the user get more attracted to using the game.
+- **The Header:**
+  
+At the top of the game, you’ll find the header, it shows your current XP bar, your level, and achievement badges.  
+For every 5 levels you reach, you unlock a new badge in your collection.
 
 Now that everything’s set up, you can launch the frontend by running:
 ```bash
 npm run dev
 ```
+- **The computer:**
+When the character enters the library and presses "E" to use the laptop, a timer will appear.  
+You’ll get 25 minutes of focused study time, following the Pomodoro technique.  
+After the timer hits zero, a pop-up will show up telling you to take a 5-minute break.  
+Finishing a full Pomodoro earns you +3 XP for your user!
 
 ## **Now the Backend!**
 The backend magic is run with Flask, which acts as the API for my Python code. All main logic sits inside the `controllers` folder. The main Flask app file (`app.py`) handles routes, the port, and global setup.
