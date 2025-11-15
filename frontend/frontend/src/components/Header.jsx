@@ -3,20 +3,41 @@ import { useXp } from "./XpContext";
 import diamond from '../assets/img/diamond.png';
 import star from '../assets/img/starrr.png';
 import face from '../assets/img/face.png';
-import crown from '../assets/img/crown.png';
-import book from '../assets/img/book.png';
+import white from '../assets/img/flower_15360186.png';
+import sakura from '../assets/img/sakura_14827880.png';
+import sunflower from '../assets/img/sunflower_14827813.png';
+import forest from '../assets/img/forest.png';
 
 const STAR_IMG = star;
 const FACE_IMG = face;
 const DIAMOND_IMG = diamond;
 const MAX_XP = 10;
-const CROWN_IMG = crown;
-const BOOK_IMG = book;
 
 const BADGE_MILESTONES = [
-  { level: 10, label: "Expert", img: BOOK_IMG },
-  { level: 20, label: "Champion", img: CROWN_IMG },
-  { level: 50, label: "Master", img: CROWN_IMG },
+  {
+    level: 5,
+    label: "Scholar",
+    img: white,
+    desc: "You earned the White Flower badge! Your learning journey blooms with curiosity."
+  },
+  {
+    level: 10,
+    label: "Expert",
+    img: sakura,
+    desc: "Sakura Flower badge unlocked! Beautiful wisdom blossoms as you progress."
+  },
+  {
+    level: 20,
+    label: "Champion",
+    img: sunflower,
+    desc: "Sunflower badge awarded! You stand tall, radiating achievement and positivity."
+  },
+  {
+    level: 50,
+    label: "Master",
+    img: forest,
+    desc: "Forest badge achieved! Deep roots and great strength mark your mastery."
+  }
 ];
 
 const retroFont = {
@@ -37,28 +58,38 @@ const Header = () => {
   const level = Math.floor(xp / MAX_XP);
   const barProgress = xp % MAX_XP;
   const progress = Math.max(0, Math.min(1, barProgress / MAX_XP));
-  const earnedBadges = BADGE_MILESTONES.filter(badge => level >= badge.level && badge.level <= 100);
+  const earnedBadges = BADGE_MILESTONES.filter(badge => level >= badge.level);
 
   const [showPopup, setShowPopup] = useState(false);
   const [lastBadgeLevel, setLastBadgeLevel] = useState(0);
+  const [popupBadge, setPopupBadge] = useState(null);
   const prevLevel = useRef(level);
 
+  // Automatic popup on earning badge
   useEffect(() => {
-    const milestone = BADGE_MILESTONES.find(badge => level === badge.level && badge.level <= 30);
+    const milestone = BADGE_MILESTONES.find(badge => level === badge.level);
     if (milestone && lastBadgeLevel < milestone.level) {
+      setPopupBadge(milestone);
       setShowPopup(true);
       setLastBadgeLevel(milestone.level);
-      const timer = setTimeout(() => setShowPopup(false), 2000);
+      const timer = setTimeout(() => setShowPopup(false), 2500);
       return () => clearTimeout(timer);
     } else if (level > prevLevel.current) {
-      // Non-milestone level up
+      setPopupBadge(null);
       setShowPopup(true);
-      const timer = setTimeout(() => setShowPopup(false), 2000);
+      const timer = setTimeout(() => setShowPopup(false), 1500);
       return () => clearTimeout(timer);
     }
     prevLevel.current = level;
   }, [level, lastBadgeLevel]);
 
+  // Popup auto-hide on user click
+  useEffect(() => {
+    if (showPopup && popupBadge) {
+      const timer = setTimeout(() => setShowPopup(false), 2500);
+      return () => clearTimeout(timer);
+    }
+  }, [showPopup, popupBadge]);
 
   return (
     <header
@@ -125,13 +156,34 @@ const Header = () => {
       {/* Badges Earned */}
       <div className="flex items-center mt-2">
         {earnedBadges.map((badge, idx) => (
-          <div key={badge.level} style={{ display: "flex", alignItems: "center", marginRight: "8px",marginLeft: "10px", marginTop: "4px"  }}>
-            <img src={badge.img} alt={badge.label} style={{ width: "28px", height: "28px", imageRendering: "pixelated", position:"relative" }} />
+          <div
+            key={badge.level}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              marginRight: "14px",
+              marginLeft: "10px",
+              marginTop: "4px",
+              cursor: "pointer"
+            }}
+            onClick={() => {
+              setPopupBadge(badge);
+              setShowPopup(true);
+            }}
+          >
+            <img src={badge.img} alt={badge.label} style={{
+              width: "28px",
+              height: "28px",
+              imageRendering: "pixelated",
+              position: "relative"
+            }} />
+            
           </div>
         ))}
       </div>
 
-      {/* Level Up / Badge Popup */}
+      {/* Popup */}
       {showPopup && (
         <div
           style={{
@@ -151,15 +203,33 @@ const Header = () => {
             textAlign: "center"
           }}
         >
-          {BADGE_MILESTONES.find(b => b.level === level) ? (
+          {popupBadge ? (
             <>
-              <img src={BADGE_MILESTONES.find(b => b.level === level).img} alt="Badge" style={{ width: "48px", marginBottom: "12px" }} />
+              <img src={popupBadge.img} alt="Badge" style={{ width: "48px", marginBottom: "12px" }} />
               <div style={{ marginBottom: "12px" }}>
-                Badge unlocked: {BADGE_MILESTONES.find(b => b.level === level).label}!
+                <b>Badge unlocked: {popupBadge.label}!</b>
               </div>
-              <div>Yay! You're Level {level}</div>
-              <div>Keep Going!</div>
+              <div style={{ fontSize: "16px", color: "#3474ff", marginBottom: "12px" }}>
+                {popupBadge.desc}
+              </div>
             </>
+          ) : BADGE_MILESTONES.find(b => b.level === level) ? (
+            (() => {
+              const curr = BADGE_MILESTONES.find(b => b.level === level);
+              return (
+                <>
+                  <img src={curr.img} alt="Badge" style={{ width: "48px", marginBottom: "12px" }} />
+                  <div style={{ marginBottom: "12px" }}>
+                    <b>Badge unlocked: {curr.label}!</b>
+                  </div>
+                  <div style={{ fontSize: "16px", color: "#3474ff", marginBottom: "12px" }}>
+                    {curr.desc}
+                  </div>
+                  <div>Yay! You're Level {level}</div>
+                  <div>Keep Going!</div>
+                </>
+              );
+            })()
           ) : (
             <>
               <img src={DIAMOND_IMG} alt="Level Diamond" style={{ width: "48px", marginBottom: "16px" }} />
