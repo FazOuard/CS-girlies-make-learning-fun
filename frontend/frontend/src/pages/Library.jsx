@@ -187,7 +187,7 @@ const Library = () => {
         player.moving = true;
       }
 
-      // SPACE KEY HANDLING - advance NPC conversation
+      
       if ((e.code === 'Space' || e.key === ' ') && npcConversation && npcTypingFinished) {
         npcConvoIndex++;
         if (npcConvoIndex < npcConvoLines.length) {
@@ -216,13 +216,11 @@ const Library = () => {
         }
       }
 
-      // Direction keys
       if (e.key === "ArrowUp") player.direction = "back";
       else if (e.key === "ArrowDown") player.direction = "front";
       else if (e.key === "ArrowLeft") player.direction = "left";
       else if (e.key === "ArrowRight") player.direction = "right";
 
-      // E KEY HANDLING - interact with NPCs and interactables
       if (e.key && e.key.toLowerCase() === 'e' && e.code === 'KeyE' && !wasDown && !e.repeat) {
         const interactRange = 100;
         const px = player.x + player.width / 2;
@@ -317,7 +315,7 @@ const Library = () => {
                   if (i >= dialogFullText.length) {
                     clearInterval(dialogTypeTimer);
                     dialogTypeTimer = null;
-                    setTimeout(() => navigate('/'), 300);
+                    setTimeout(() => navigate('/game'), 300);
                   }
                 }, step);
                 dialogDotsTimer = null;
