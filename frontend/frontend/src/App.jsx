@@ -4,6 +4,7 @@ import './App.css'
 import First from './pages/First.jsx';
 import Game from './pages/Game.jsx';
 import Header from './components/Header.jsx';
+import Library from './pages/Library.jsx';
 function App() {
     return (
 
@@ -16,6 +17,7 @@ function App() {
                     <Route path="/" element={<First />} />
                     
                     <Route path="/Game" element={<Game />} />
+                    <Route path="/lib" element={<Library />} />
                     
                 </Routes>
                             

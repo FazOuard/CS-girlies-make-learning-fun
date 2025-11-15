@@ -7,14 +7,14 @@ const PinkPopup = ({ onClose }) => {
   const [timerSeconds, setTimerSeconds] = useState(300);
   const [notesText, setNotesText] = useState('');
   
-  // Game state
+  
   const [gameScore, setGameScore] = useState(0);
   const [ballPosition, setBallPosition] = useState({ x: 50, y: 50 });
   const [ballVelocity, setBallVelocity] = useState({ x: 2, y: 2 });
   const [paddlePosition, setPaddlePosition] = useState(50);
   const [gameActive, setGameActive] = useState(false);
 
-  // Load notes from storage on mount
+
   useEffect(() => {
     const loadNotes = async () => {
       try {
@@ -273,7 +273,7 @@ const PinkPopup = ({ onClose }) => {
           overflow: 'hidden',
         }}
       >
-        {/* Close Button - Top Right Corner */}
+        
         <button
           onClick={onClose}
           style={{
@@ -316,7 +316,7 @@ const PinkPopup = ({ onClose }) => {
           <DesktopIcon icon={FileText} label="Notes" onClick={() => openWindow('notes')} />
         </div>
 
-        {/* Timer Window */}
+       
         <Window id="timer" title="Study Timer" icon={Clock}>
           <div style={{ textAlign: 'center' }}>
             <div
@@ -368,7 +368,7 @@ const PinkPopup = ({ onClose }) => {
           </div>
         </Window>
 
-        {/* Game Window - Breakout Style Game */}
+        
         <Window id="game" title="Break Time - Paddle Game" icon={Gamepad2}>
           <div style={{ textAlign: 'center' }}>
             <div style={{ marginBottom: 8, fontSize: 10, fontWeight: 'bold', color: '#000080' }}>
@@ -403,7 +403,7 @@ const PinkPopup = ({ onClose }) => {
                 />
               )}
 
-              {/* Paddle */}
+          
               <div
                 style={{
                   position: 'absolute',
@@ -512,7 +512,7 @@ const PinkPopup = ({ onClose }) => {
           </div>
         </Window>
 
-        {/* Taskbar */}
+        
         <div
           style={{
             position: 'absolute',
