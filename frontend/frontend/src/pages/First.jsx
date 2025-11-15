@@ -7,7 +7,7 @@ import houseBG from '../assets/img/house.png';
 const characters = [
   {
     id: 1,
-    name: 'CuteYui',
+    name: 'Faz',
     description: 'Smart and Brave',
     img: first
   },
@@ -87,7 +87,7 @@ const First = () => {
         {stage === 'welcome' && (
           <div style={{ textAlign: 'center' }}>
             <h1 className="pixel-title">Hello world..!</h1>
-            <p className="pixel-subtitle">Let's learn in a fun way!</p>
+            <p className="pixel-subtitle">Welcome to Faz's world! <br /> Let's learn in a fun way!</p>
             <button onClick={() => setStage('character')} className="pixel-btn">
               ▶ Start
             </button>
