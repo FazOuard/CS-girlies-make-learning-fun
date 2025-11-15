@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
+import { useXp } from "../components/XpContext.jsx";
+
+const STAR_IMG = '/star.png';
 
 export default function PdfWisdom({ onClose }) {
   const [step, setStep] = useState('upload');
+  const { addXp } = useXp();
   const [file, setFile] = useState(null);
   const [sessionId, setSessionId] = useState(null);
   const [content, setContent] = useState('');
@@ -14,6 +18,8 @@ export default function PdfWisdom({ onClose }) {
   const [keyPoints, setKeyPoints] = useState([]);
   const [showKeyPoints, setShowKeyPoints] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
+  const [showPopup, setShowPopup] = useState(false);
+  const [popupTimeoutId, setPopupTimeoutId] = useState(null);
 
   const API_BASE = 'http://localhost:8080';
 
@@ -48,74 +54,72 @@ export default function PdfWisdom({ onClose }) {
   };
 
   const waitForReady = async (session_id) => {
-  let ready = false;
-  while (!ready) {
+    let ready = false;
+    while (!ready) {
+      try {
+        const res = await fetch(`${API_BASE}/status/${session_id}`);
+        const data = await res.json();
+        if (data.ready) {
+          ready = true;
+        } else if (data.error) {
+          throw new Error(data.error);
+        } else {
+          await new Promise(r => setTimeout(r, 1000));
+        }
+      } catch (err) {
+        console.error("Status check failed:", err);
+        await new Promise(r => setTimeout(r, 2000));
+      }
+    }
+  };
+
+  const handleGetSummary = async () => {
+    if (!sessionId) return;
+    setLoading(true);
     try {
-      const res = await fetch(`${API_BASE}/status/${session_id}`);
+      await waitForReady(sessionId);
+
+      const res = await fetch(`${API_BASE}/summary/${sessionId}?short=false`);
       const data = await res.json();
-      if (data.ready) {
-        ready = true;
-      } else if (data.error) {
-        throw new Error(data.error);
-      } else {
-        await new Promise(r => setTimeout(r, 1000)); // attendre 1s
+      if (data.summary) {
+        setContent(data.summary);
+        setStep('summary');
+
+        const kpRes = await fetch(`${API_BASE}/keypoints/${sessionId}?count=8`);
+        const kpData = await kpRes.json();
+        setKeyPoints(kpData.keypoints || []);
       }
     } catch (err) {
-      console.error("Status check failed:", err);
-      await new Promise(r => setTimeout(r, 2000)); // retry plus tard
+      console.error(err);
+      alert('Error fetching summary');
+    } finally {
+      setLoading(false);
     }
-  }
-};
-
-const handleGetSummary = async () => {
-  if (!sessionId) return;
-  setLoading(true);
-  try {
-    // attendre que le pipeline soit prêt
-    await waitForReady(sessionId);
-
-    const res = await fetch(`${API_BASE}/summary/${sessionId}?short=false`);
-    const data = await res.json();
-    if (data.summary) {
-      setContent(data.summary);
-      setStep('summary');
-
-      const kpRes = await fetch(`${API_BASE}/keypoints/${sessionId}?count=8`);
-      const kpData = await kpRes.json();
-      setKeyPoints(kpData.keypoints || []);
-    }
-  } catch (err) {
-    console.error(err);
-    alert('Error fetching summary');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const handleGetQuiz = async () => {
-  if (!sessionId) return;
-  setLoading(true);
-  try {
-    // Wait until the quiz is ready
-    await waitForReady(sessionId);
+    if (!sessionId) return;
+    setLoading(true);
+    try {
+      await waitForReady(sessionId);
 
-    const res = await fetch(`${API_BASE}/quiz/${sessionId}?n=5`);
-    const data = await res.json();
-    if (data.quiz) {
-      setQuiz(data.quiz);
-      setStep('quiz');
-      setQuizSubmitted(false);
-      setQuizAnswers({});
-    } else {
-      alert('Quiz is empty or not available');
+      const res = await fetch(`${API_BASE}/quiz/${sessionId}?n=5`);
+      const data = await res.json();
+      if (data.quiz) {
+        setQuiz(data.quiz);
+        setStep('quiz');
+        setQuizSubmitted(false);
+        setQuizAnswers({});
+      } else {
+        alert('Quiz is empty or not available');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error fetching quiz');
+    } finally {
+      setLoading(false);
     }
-  } catch (err) {
-    console.error(err);
-    alert('Error fetching quiz');
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   const handleQuizAnswer = (qIndex, optionIndex) => {
     if (!quizSubmitted) {
@@ -123,13 +127,26 @@ const handleGetSummary = async () => {
     }
   };
 
+  // Here is the only logic changed
   const handleSubmitQuiz = () => {
     let score = 0;
+    let xpGained = 0;
     quiz.forEach((q, idx) => {
-      if (quizAnswers[idx] === q.answer) score++;
+      if (quizAnswers[idx] === q.answer) {
+        score++;
+        xpGained += 5;
+      }
     });
     setQuizScore(score);
     setQuizSubmitted(true);
+
+    if (xpGained > 0) {
+      addXp(xpGained);
+      setShowPopup(true);
+      if (popupTimeoutId) clearTimeout(popupTimeoutId);
+      const id = setTimeout(() => setShowPopup(false), 2000);
+      setPopupTimeoutId(id);
+    }
   };
 
   const handleAskQuestion = async () => {
@@ -181,6 +198,39 @@ const handleGetSummary = async () => {
       zIndex: 1000,
       backdropFilter: 'blur(4px)',
     }}>
+      {/* XP Popup */}
+      {showPopup && (
+        <div
+          style={{
+            position: "fixed",
+            top: "20vh",
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "#fff",
+            border: "4px solid #e7af18",
+            borderRadius: "12px",
+            boxShadow: "0 2px 20px #3339",
+            padding: "32px 48px",
+            zIndex: 9999,
+            color: "#d1a019ff",
+            fontSize: "22px",
+            textAlign: "center",
+            fontFamily: '"Press Start 2P", monospace',
+            letterSpacing: "1.5px",
+            animation: "pop-bounce 1s"
+          }}
+        >
+          <img src={STAR_IMG} alt="Level star" style={{ width: "48px", marginBottom: "16px" }} />
+          <div style={{ marginBottom: "12px" }}>
+            New XP added!
+          </div>
+          <div style={{ marginBottom: "12px" }}>
+            +{quizScore * 5} XP
+          </div>
+          <div>Keep going!</div>
+        </div>
+      )}
+
       <div style={{
         width: 620,
         background: '#C9A876',
@@ -194,13 +244,17 @@ const handleGetSummary = async () => {
         fontFamily: '"Press Start 2P", monospace',
         imageRendering: 'pixelated',
       }}>
-        
-        
-
         <style>{`
           @keyframes float {
             0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
+          }
+          @keyframes pop-bounce {
+            0%   { transform: translateX(-50%) scale(0.6);}
+            55%  { transform: translateX(-50%) scale(1.18);}
+            75%  { transform: translateX(-50%) scale(0.96);}
+            90%  { transform: translateX(-50%) scale(1.06);}
+            100% { transform: translateX(-50%) scale(1);}
           }
           input[type="file"]::file-selector-button {
             background: linear-gradient(135deg, #A0826D 0%, #8a705dff 100%);
@@ -214,7 +268,6 @@ const handleGetSummary = async () => {
           }
         `}</style>
 
-       
         <div style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -229,7 +282,6 @@ const handleGetSummary = async () => {
               margin: '0 0 4px 0',
               color: '#8B3A3A',
               fontFamily: '"Press Start 2P", pixel fonts, monospace'
-              
             }}>
               Wisdom Tree
             </h1>
@@ -254,7 +306,9 @@ const handleGetSummary = async () => {
         {/* Upload Step */}
         {step === 'upload' && (
           <div>
-            <p style={{ marginBottom: 20, color: '#A0826D', fontSize: 15, fontWeight: 500 }}> Drop your scroll here to gain knowledge!</p>
+            <p style={{ marginBottom: 20, color: '#A0826D', fontSize: 15, fontWeight: 500 }}>
+              Drop your study scroll here to instantly extract power notes and boost your learning speed!
+            </p>
             <div style={{
               background: 'rgba(255, 192, 203, 0.3)',
               border: '2px dashed #A0826D',
@@ -291,7 +345,6 @@ const handleGetSummary = async () => {
               >
                 {loading ? 'Uploading...' : 'Begin Quest!'}
               </button>
-              
             </div>
           </div>
         )}
@@ -299,7 +352,9 @@ const handleGetSummary = async () => {
         {/* Mode Selection Step */}
         {step === 'mode' && (
           <div>
-            <p style={{ marginBottom: 24, color: '#A0826D', fontSize: 15, fontWeight: 500 }}> Choose your path, traveler!</p>
+            <p style={{ marginBottom: 24, color: '#A0826D', fontSize: 15, fontWeight: 500 }}>
+              Select your power-up to boost learning!
+            </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <button
                 onClick={handleGetSummary}
@@ -385,7 +440,6 @@ const handleGetSummary = async () => {
             }}>
               {content}
             </div>
-
             <button
               onClick={() => setShowKeyPoints(!showKeyPoints)}
               style={{
@@ -403,7 +457,6 @@ const handleGetSummary = async () => {
             >
               {showKeyPoints ? '▼ Hide Key Points' : '▶ Key Points'}
             </button>
-
             {showKeyPoints && (
               <div style={{
                 background: 'linear-gradient(135deg, #fffacd, #ffffe0)',
@@ -422,7 +475,6 @@ const handleGetSummary = async () => {
                 </ul>
               </div>
             )}
-
             <div style={{
               background: 'rgba(255, 192, 203, 0.2)',
               border: '2px solid #ffb6d9',
@@ -482,7 +534,6 @@ const handleGetSummary = async () => {
                 </div>
               )}
             </div>
-
             <div style={{ display: 'flex', gap: 8 }}>
               <button onClick={() => setStep('mode')} style={{
                 flex: 1,
@@ -546,8 +597,8 @@ const handleGetSummary = async () => {
                             ? 'linear-gradient(135deg, #d4edda, #c3e6cb)'
                             : 'linear-gradient(135deg, #f8d7da, #f5c6cb)'
                           : quizSubmitted && oIdx === q.answer
-                          ? 'linear-gradient(135deg, #d4edda, #c3e6cb)'
-                          : 'rgba(255, 255, 255, 0.6)',
+                            ? 'linear-gradient(135deg, #d4edda, #c3e6cb)'
+                            : 'rgba(255, 255, 255, 0.6)',
                       border: '2px solid' + (
                         quizSubmitted && oIdx === q.answer ? ' #28a745' : ' rgba(255, 105, 180, 0.2)'
                       ),
@@ -585,7 +636,6 @@ const handleGetSummary = async () => {
                 )}
               </div>
             ))}
-
             <div style={{ display: 'flex', gap: 8, marginTop: 18 }}>
               {!quizSubmitted ? (
                 <button
