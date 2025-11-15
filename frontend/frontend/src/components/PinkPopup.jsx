@@ -1,67 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Gamepad2 } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { useXp } from "../components/XpContext.jsx";
+import star from '../assets/img/starr.png';
+
+const STAR_IMG = star;
+
 const PinkPopup = ({ onClose }) => {
   const [openWindows, setOpenWindows] = useState({});
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(1500);
   const { addXp } = useXp();
-  const [gameScore, setGameScore] = useState(0);
-  const [ballPosition, setBallPosition] = useState({ x: 50, y: 50 });
-  const [ballVelocity, setBallVelocity] = useState({ x: 2, y: 2 });
-  const [paddlePosition, setPaddlePosition] = useState(50);
-  const [gameActive, setGameActive] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
 
-  // Timer effect
+  // Timer interval: only decreases timer
   useEffect(() => {
     if (!timerRunning || timerSeconds <= 0) return;
     const interval = setInterval(() => {
-      setTimerSeconds((s) => {
-        if (s <= 1) {
-          setTimerRunning(false);
-          addXp(3);
-          return 1500;
-        }
-        return s - 1;
-      });
+      setTimerSeconds(s => s - 1);
     }, 1000);
     return () => clearInterval(interval);
   }, [timerRunning, timerSeconds]);
 
-  // Game loop
+  // Handle XP, popup, and timer reset when Pomodoro is finished
   useEffect(() => {
-    if (!gameActive) return;
-    const gameLoop = setInterval(() => {
-      setBallPosition((pos) => {
-        let newX = pos.x + ballVelocity.x;
-        let newY = pos.y + ballVelocity.y;
-        let newVelX = ballVelocity.x;
-        let newVelY = ballVelocity.y;
+    if (timerSeconds === 0) {
+      setTimerRunning(false);
+      addXp(3);
+      setShowPopup(true);
+      setTimerSeconds(1500); 
+    }
+  }, [timerSeconds, addXp]);
 
-        
-        if (newX <= 0 || newX >= 95) newVelX = -newVelX;
-        if (newY <= 0) newVelY = -newVelY;
-
-        
-        if (newY >= 85 && newX >= paddlePosition - 5 && newX <= paddlePosition + 15) {
-          newVelY = -Math.abs(newVelY);
-          setGameScore((s) => s + 10);
-        }
-
-        // Game over
-        if (newY >= 95) {
-          setGameActive(false);
-          alert(`Game Over! Score: ${gameScore}`);
-          setGameScore(0);
-          return { x: 50, y: 50 };
-        }
-
-        setBallVelocity({ x: newVelX, y: newVelY });
-        return { x: newX, y: newY };
-      });
-    }, 30);
-    return () => clearInterval(gameLoop);
-  }, [gameActive, ballVelocity, paddlePosition, gameScore]);
+  
+  useEffect(() => {
+    if (!showPopup) return;
+    const timeout = setTimeout(() => setShowPopup(false), 300000);
+    return () => clearTimeout(timeout);
+  }, [showPopup]);
 
   const openWindow = (id) => {
     setOpenWindows((prev) => ({ ...prev, [id]: true }));
@@ -84,20 +59,6 @@ const PinkPopup = ({ onClose }) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const startGame = () => {
-    setGameActive(true);
-    setGameScore(0);
-    setBallPosition({ x: 50, y: 50 });
-    setBallVelocity({ x: 2, y: 2 });
-  };
-
-  const handleMouseMove = (e) => {
-    if (!gameActive) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    setPaddlePosition(Math.max(10, Math.min(80, x)));
   };
 
   const DesktopIcon = ({ icon: Icon, label, onClick }) => (
@@ -149,19 +110,16 @@ const PinkPopup = ({ onClose }) => {
 
   const Window = ({ id, title, children, icon: Icon }) => {
     if (!openWindows[id]) return null;
-
     const positions = {
       timer: { x: 80, y: 40 },
-      game: { x: 200, y: 60 },
     };
-
     return (
       <div
         style={{
           position: 'absolute',
           left: positions[id].x,
           top: positions[id].y,
-          width: id === 'game' ? 320 : 280,
+          width: 280,
           background: '#c0c0c0',
           border: '2px solid',
           borderColor: '#dfdfdf #808080 #808080 #dfdfdf',
@@ -228,7 +186,6 @@ const PinkPopup = ({ onClose }) => {
         backdropFilter: 'blur(4px)',
       }}
     >
-      {/* Main Desktop Container */}
       <div
         style={{
           position: 'relative',
@@ -266,8 +223,6 @@ const PinkPopup = ({ onClose }) => {
         >
           ×
         </button>
-
-        {/* Desktop Icons */}
         <div
           style={{
             display: 'flex',
@@ -280,9 +235,7 @@ const PinkPopup = ({ onClose }) => {
           }}
         >
           <DesktopIcon icon={Clock} label="Timer" onClick={() => openWindow('timer')} />
-          <DesktopIcon icon={Gamepad2} label="Game" onClick={() => openWindow('game')} />
         </div>
-
         <Window id="timer" title="Study Timer" icon={Clock}>
           <div style={{ textAlign: 'center' }}>
             <div
@@ -333,92 +286,6 @@ const PinkPopup = ({ onClose }) => {
             <div style={{ fontSize: 8, color: '#666' }}>Pomodoro Technique: 25 min study session</div>
           </div>
         </Window>
-
-        <Window id="game" title="Break Time - Paddle Game" icon={Gamepad2}>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ marginBottom: 8, fontSize: 10, fontWeight: 'bold', color: '#000080' }}>
-              Score: {gameScore}
-            </div>
-            <div
-              onMouseMove={handleMouseMove}
-              style={{
-                position: 'relative',
-                width: '100%',
-                height: 200,
-                background: '#000080',
-                border: '2px inset',
-                borderColor: '#808080 #dfdfdf #dfdfdf #808080',
-                cursor: 'none',
-                overflow: 'hidden',
-              }}
-            >
-              {/* Ball */}
-              {gameActive && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: `${ballPosition.x}%`,
-                    top: `${ballPosition.y}%`,
-                    width: 10,
-                    height: 10,
-                    borderRadius: '50%',
-                    background: '#00ff00',
-                    boxShadow: '0 0 10px #00ff00',
-                  }}
-                />
-              )}
-
-              <div
-                style={{
-                  position: 'absolute',
-                  left: `${paddlePosition}%`,
-                  bottom: 10,
-                  width: 60,
-                  height: 10,
-                  background: 'linear-gradient(180deg, #fff, #ccc)',
-                  borderRadius: 2,
-                  boxShadow: '0 2px 4px rgba(0,0,0,0.5)',
-                }}
-              />
-
-              {!gameActive && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    color: '#00ff00',
-                    fontSize: 12,
-                    textAlign: 'center',
-                    fontFamily: 'Courier New, monospace',
-                  }}
-                >
-                  <div style={{ fontSize: 16, marginBottom: 8 }}>🎮</div>
-                  <div>Move mouse to control paddle</div>
-                  <div style={{ fontSize: 9, marginTop: 4 }}>Keep the ball bouncing!</div>
-                </div>
-              )}
-            </div>
-            <button
-              onClick={startGame}
-              disabled={gameActive}
-              style={{
-                marginTop: 8,
-                padding: '6px 16px',
-                background: gameActive ? '#808080' : '#c0c0c0',
-                border: '2px solid',
-                borderColor: '#dfdfdf #808080 #808080 #dfdfdf',
-                cursor: gameActive ? 'not-allowed' : 'pointer',
-                fontSize: 9,
-                fontWeight: 'bold',
-              }}
-            >
-              {gameActive ? 'Playing...' : 'Start Game'}
-            </button>
-          </div>
-        </Window>
-
         <div
           style={{
             position: 'absolute',
@@ -452,7 +319,6 @@ const PinkPopup = ({ onClose }) => {
           >
             <span style={{ fontSize: 12 }}>⊞</span> Start
           </button>
-
           {openWindows.timer && (
             <button
               onClick={() => closeWindow('timer')}
@@ -468,27 +334,40 @@ const PinkPopup = ({ onClose }) => {
               ⏱️ Timer
             </button>
           )}
-
-          {openWindows.game && (
-            <button
-              onClick={() => closeWindow('game')}
-              style={{
-                padding: '4px 8px',
-                background: '#808080',
-                border: '2px solid',
-                borderColor: '#808080 #dfdfdf #dfdfdf #808080',
-                cursor: 'pointer',
-                fontSize: 8,
-              }}
-            >
-              🎮 Game
-            </button>
-          )}
-
           <div style={{ marginLeft: 'auto', fontSize: 8, padding: '0 4px' }}>
             {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
           </div>
         </div>
+        {showPopup && (
+          <div
+            style={{
+              position: "fixed",
+              top: "20vh",
+              left: "50%",
+              transform: "translateX(-50%)",
+              background: "#fff",
+              border: "4px solid #e7af18",
+              borderRadius: "12px",
+              boxShadow: "0 2px 20px #3339",
+              padding: "32px 48px",
+              zIndex: 9999,
+              color: "#d1a019ff",
+              fontSize: "22px",
+              textAlign: "center"
+            }}
+          >
+            <img src={STAR_IMG} alt="Level star" style={{ width: "48px", marginBottom: "16px" }} />
+            <div style={{ marginBottom: "12px" }}>
+              New XP added! 
+            </div>
+            <div style={{ marginBottom: "12px" }}>
+              +3 XP
+            </div>
+            <div>Take 5 minutes break!</div>
+            <div style={{ fontSize: 8, color: '#666' }}>This pop up will automatically get removed after 5 minutes.</div>
+            <div style={{ fontSize: 8, color: '#666' }}>If you want to remove it, click on the x button.</div>
+          </div>
+        )}
       </div>
     </div>
   );
