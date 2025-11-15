@@ -63,7 +63,7 @@ npm install
 
 _The link to the pixel art and icons, I used, is : https://kamisama887.itch.io/lorenz-fries-school-horror_
 
-_Links from where I got my pixel icons: https://www.freepik.com/search?format=families&iconType=standard&last_filter=query&last_value=&query=&type=icon_
+_Link from where I got my pixel icons images: https://www.freepik.com/search?format=families&iconType=standard&last_filter=query&last_value=&query=&type=icon_
 
 ---
 
@@ -74,7 +74,7 @@ _Links from where I got my pixel icons: https://www.freepik.com/search?format=fa
 - **Map Zones:** The world is built from “blocks”—each is a color. Example: Stepping up to a yellow tile might deliver a boost of inspiration. Pink/blue, etc. can do anything.  
   **Red zones?** Invisible walls, no trespassing!
 - **Interaction:** Hit 'E' by different spots to trigger advice, jokes, or, uh, sisterly scolding.
-- **Camera:** Always follows your character, keeping the action centered—nostalgia pixel-style!
+- **Camera:** Always follows your character, keeping the action centered, nostalgia pixel-style!
 
 
 Same goes for the rest of the frontend pages: The character's house, the library and the forest.
