@@ -26,7 +26,7 @@ Pick: React → JavaScript → [smash Enter until you name it "frontend"]
 ### **Essential Power-Ups:**
 Once you get into the "frontend" folder with:
 ```bash
-cd ./frontend
+cd frontend
 ```
 Install these for full feature mode:
 ```bash
