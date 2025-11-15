@@ -41,6 +41,11 @@ You’ll also create `postcss.config.js` and `tailwind.config.js` (don’t skip 
 
 ---
 
+If you don't want to get into all this mess, just clone the repository into your device and enter:
+```bash
+npm install 
+```
+
 ###  Folder Map
 
 - **components/** – Reusable pieces for layout and game bits.
@@ -71,6 +76,10 @@ Same goes for the rest of the frontend pages: The character's house, the library
 - **The header:**
 The header is composed of the XP levels which get added when the user achieves some operations. When the bar is completed the level goes up. I added this category because it will let the user get more attracted to using the game.
 
+Now that everything’s set up, you can launch the frontend by running:
+```bash
+npm run dev
+```
 
 ## **Now the Backend!**
 The backend magic is run with Flask, which acts as the API for my Python code. All main logic sits inside the `controllers` folder. The main Flask app file (`app.py`) handles routes, the port, and global setup.
