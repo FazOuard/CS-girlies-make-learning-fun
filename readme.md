@@ -4,6 +4,8 @@ The hackathon aim is to make learning fun, so I decided to create a video game t
 
 I'm going to explain to you what packages I used, how I made it work and the concept behind my code. <br />
 
+All the commands shown here are run from the Windows PowerShell, right inside VS Code.
+
 ## **Frontend First!**
 Built on **ReactJS** (with Vite for speed and TailwindCSS for style).  
 Here’s the super-fast, no-nonsense install:
@@ -109,7 +111,8 @@ I coded up an Ollama PDF analyzer using the [LangChain](https://github.com/hwcha
 
 Step one: download the Hugging Face model file `mistral-7b-openorca.Q4_0.gguf`. You’ll find it in the `controllers` folder. The download process took a while! I tried using `wget` and a `huggingfaceinstaller.py` script, but my terminal was missing some tools. In the end, I just downloaded it through my browser and dropped it into the project.
 
-After getting the model, I set up the API and started installing all required packages. There are three main functions:  
+After getting the model, I set up the API and started installing all required packages. There are Four main functions:  
+- Download the PDF file (this part doesn’t require the LLM, it creates an "upload" folder if it doesn’t exist, and saves files there)
 - Summarize the PDF  
 - Extract key points  
 - Create a quiz  
