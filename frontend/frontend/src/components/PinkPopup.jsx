@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Clock, Gamepad2 } from 'lucide-react';
-
+import { useXp } from "../components/XpContext.jsx";
 const PinkPopup = ({ onClose }) => {
   const [openWindows, setOpenWindows] = useState({});
   const [timerRunning, setTimerRunning] = useState(false);
   const [timerSeconds, setTimerSeconds] = useState(1500);
-
+  const { addXp } = useXp();
   const [gameScore, setGameScore] = useState(0);
   const [ballPosition, setBallPosition] = useState({ x: 50, y: 50 });
   const [ballVelocity, setBallVelocity] = useState({ x: 2, y: 2 });
@@ -19,6 +19,7 @@ const PinkPopup = ({ onClose }) => {
       setTimerSeconds((s) => {
         if (s <= 1) {
           setTimerRunning(false);
+          addXp(3);
           return 1500;
         }
         return s - 1;
