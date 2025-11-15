@@ -73,6 +73,14 @@ The header is composed of the XP levels which get added when the user achieves s
 ## **Now the Backend!**
 The backend magic is run with Flask, which acts as the API for my Python code. All main logic sits inside the `controllers` folder. The main Flask app file (`app.py`) handles routes, the port, and global setup.
 
+Now, about the LLM:  
+There are two main ways to get the language model talking to your backend.  
+- **Option 1:** You can get an API key from Hugging Face and connect to their models online (honestly, this just didn’t work smoothly for me).  
+- **Option 2:** You can run the model directly on your device, which is what I went for (using Ollama).
+
+**Heads up:**  
+If you’re using Ollama to run models locally, you’ll need to have the right C++ dependencies installed on your machine. Ollama relies on bits of C++ for the backend’s speed and compatibility, so make sure those libraries are set up before you launch everything.
+
 ### LLM PDF Analyzer Setup
 
 I coded up an Ollama PDF analyzer using the [LangChain](https://github.com/hwchase17/langchain) library, adapted from [this YouTube video](https://www.youtube.com/watch?v=WmuSEfgzcJo&list=LL&index=3). My setup is customized for my device—so it may look a bit different from the video.
@@ -83,7 +91,7 @@ After getting the model, I set up the API and started installing all required pa
 - Summarize the PDF  
 - Extract key points  
 - Create a quiz  
-There’s also a text area to ask the LLM anything about the file. (Be patient—the answers can be slow since it’s running locally for now!)
+There’s also a text area to ask the LLM anything about the file. (Be patient, the answers can be slow since it’s running locally for now!)
 
 ### Installing Dependencies
 
