@@ -63,7 +63,7 @@ npm install
 
 _The link to the pixel art and icons, I used, is : https://kamisama887.itch.io/lorenz-fries-school-horror_
 
-_Link from where I got my pixel icons images: https://www.freepik.com/search?format=families&iconType=standard&last_filter=query&last_value=&query=&type=icon_
+_Link from where I got my pixel icons: https://www.freepik.com/search?format=families&iconType=standard&last_filter=query&last_value=&query=&type=icon_
 
 ---
 
