@@ -71,3 +71,12 @@ The header is composed of the XP levels which get added when the user achieves s
 
 
 ## **Now the Backend!**
+pip install Flask
+
+pip install torch
+python test.py 
+
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+
+
+Installing collected packages: mpmath, typing-extensions, sympy, networkx, fsspec, filelock, torch, pillow, numpy, torchvision, torchaudio
