@@ -1,55 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import { Clock, Gamepad2, FileText, X } from 'lucide-react';
+import { Clock, Gamepad2 } from 'lucide-react';
 
 const PinkPopup = ({ onClose }) => {
   const [openWindows, setOpenWindows] = useState({});
   const [timerRunning, setTimerRunning] = useState(false);
-  const [timerSeconds, setTimerSeconds] = useState(300);
-  const [notesText, setNotesText] = useState('');
-  
-  
+  const [timerSeconds, setTimerSeconds] = useState(1500);
+
   const [gameScore, setGameScore] = useState(0);
   const [ballPosition, setBallPosition] = useState({ x: 50, y: 50 });
   const [ballVelocity, setBallVelocity] = useState({ x: 2, y: 2 });
   const [paddlePosition, setPaddlePosition] = useState(50);
   const [gameActive, setGameActive] = useState(false);
 
-
-  useEffect(() => {
-    const loadNotes = async () => {
-      try {
-        const result = await window.storage.get('study-notes');
-        if (result && result.value) {
-          setNotesText(result.value);
-        }
-      } catch (error) {
-        console.log('No saved notes found');
-      }
-    };
-    loadNotes();
-  }, []);
-
   // Timer effect
   useEffect(() => {
     if (!timerRunning || timerSeconds <= 0) return;
-
     const interval = setInterval(() => {
       setTimerSeconds((s) => {
         if (s <= 1) {
           setTimerRunning(false);
-          return 300;
+          return 1500;
         }
         return s - 1;
       });
     }, 1000);
-
     return () => clearInterval(interval);
   }, [timerRunning, timerSeconds]);
 
   // Game loop
   useEffect(() => {
     if (!gameActive) return;
-
     const gameLoop = setInterval(() => {
       setBallPosition((pos) => {
         let newX = pos.x + ballVelocity.x;
@@ -57,11 +37,11 @@ const PinkPopup = ({ onClose }) => {
         let newVelX = ballVelocity.x;
         let newVelY = ballVelocity.y;
 
-        // Wall collisions
+        
         if (newX <= 0 || newX >= 95) newVelX = -newVelX;
         if (newY <= 0) newVelY = -newVelY;
 
-        // Paddle collision
+        
         if (newY >= 85 && newX >= paddlePosition - 5 && newX <= paddlePosition + 15) {
           newVelY = -Math.abs(newVelY);
           setGameScore((s) => s + 10);
@@ -79,7 +59,6 @@ const PinkPopup = ({ onClose }) => {
         return { x: newX, y: newY };
       });
     }, 30);
-
     return () => clearInterval(gameLoop);
   }, [gameActive, ballVelocity, paddlePosition, gameScore]);
 
@@ -97,23 +76,13 @@ const PinkPopup = ({ onClose }) => {
 
   const resetTimer = () => {
     setTimerRunning(false);
-    setTimerSeconds(300);
+    setTimerSeconds(1500);
   };
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const saveNotes = async () => {
-    try {
-      await window.storage.set('study-notes', notesText);
-      alert('Notes saved successfully!');
-    } catch (error) {
-      console.error('Error saving notes:', error);
-      alert('Failed to save notes');
-    }
   };
 
   const startGame = () => {
@@ -183,7 +152,6 @@ const PinkPopup = ({ onClose }) => {
     const positions = {
       timer: { x: 80, y: 40 },
       game: { x: 200, y: 60 },
-      notes: { x: 150, y: 180 },
     };
 
     return (
@@ -273,7 +241,6 @@ const PinkPopup = ({ onClose }) => {
           overflow: 'hidden',
         }}
       >
-        
         <button
           onClick={onClose}
           style={{
@@ -313,10 +280,8 @@ const PinkPopup = ({ onClose }) => {
         >
           <DesktopIcon icon={Clock} label="Timer" onClick={() => openWindow('timer')} />
           <DesktopIcon icon={Gamepad2} label="Game" onClick={() => openWindow('game')} />
-          <DesktopIcon icon={FileText} label="Notes" onClick={() => openWindow('notes')} />
         </div>
 
-       
         <Window id="timer" title="Study Timer" icon={Clock}>
           <div style={{ textAlign: 'center' }}>
             <div
@@ -364,11 +329,10 @@ const PinkPopup = ({ onClose }) => {
                 Reset
               </button>
             </div>
-            <div style={{ fontSize: 8, color: '#666' }}>5 min study session</div>
+            <div style={{ fontSize: 8, color: '#666' }}>Pomodoro Technique: 25 min study session</div>
           </div>
         </Window>
 
-        
         <Window id="game" title="Break Time - Paddle Game" icon={Gamepad2}>
           <div style={{ textAlign: 'center' }}>
             <div style={{ marginBottom: 8, fontSize: 10, fontWeight: 'bold', color: '#000080' }}>
@@ -403,7 +367,6 @@ const PinkPopup = ({ onClose }) => {
                 />
               )}
 
-          
               <div
                 style={{
                   position: 'absolute',
@@ -455,64 +418,6 @@ const PinkPopup = ({ onClose }) => {
           </div>
         </Window>
 
-        {/* Notes Window */}
-        <Window id="notes" title="Notepad - Study Notes" icon={FileText}>
-          <textarea
-            value={notesText}
-            onChange={(e) => setNotesText(e.target.value)}
-            style={{
-              width: '100%',
-              height: 100,
-              padding: 6,
-              border: '2px inset',
-              borderColor: '#808080 #dfdfdf #dfdfdf #808080',
-              fontFamily: 'MS Sans Serif, Arial, sans-serif',
-              fontSize: 9,
-              resize: 'none',
-              boxSizing: 'border-box',
-              backgroundColor: '#ffffff',
-              outline: 'none',
-            }}
-            placeholder="Type your study notes here..."
-          />
-          <div style={{ marginTop: 6, display: 'flex', gap: 6 }}>
-            <button
-              onClick={saveNotes}
-              style={{
-                flex: 1,
-                padding: '4px 8px',
-                background: '#c0c0c0',
-                border: '2px solid',
-                borderColor: '#dfdfdf #808080 #808080 #dfdfdf',
-                cursor: 'pointer',
-                fontSize: 8,
-                fontWeight: 'bold',
-              }}
-            >
-              💾 Save
-            </button>
-            <button
-              onClick={() => setNotesText('')}
-              style={{
-                flex: 1,
-                padding: '4px 8px',
-                background: '#c0c0c0',
-                border: '2px solid',
-                borderColor: '#dfdfdf #808080 #808080 #dfdfdf',
-                cursor: 'pointer',
-                fontSize: 8,
-                fontWeight: 'bold',
-              }}
-            >
-              🗑️ Clear
-            </button>
-          </div>
-          <div style={{ marginTop: 4, fontSize: 7, color: '#666', textAlign: 'center' }}>
-            Notes are saved automatically
-          </div>
-        </Window>
-
-        
         <div
           style={{
             position: 'absolute',
@@ -546,7 +451,7 @@ const PinkPopup = ({ onClose }) => {
           >
             <span style={{ fontSize: 12 }}>⊞</span> Start
           </button>
-          
+
           {openWindows.timer && (
             <button
               onClick={() => closeWindow('timer')}
@@ -562,7 +467,7 @@ const PinkPopup = ({ onClose }) => {
               ⏱️ Timer
             </button>
           )}
-          
+
           {openWindows.game && (
             <button
               onClick={() => closeWindow('game')}
@@ -578,23 +483,7 @@ const PinkPopup = ({ onClose }) => {
               🎮 Game
             </button>
           )}
-          
-          {openWindows.notes && (
-            <button
-              onClick={() => closeWindow('notes')}
-              style={{
-                padding: '4px 8px',
-                background: '#808080',
-                border: '2px solid',
-                borderColor: '#808080 #dfdfdf #dfdfdf #808080',
-                cursor: 'pointer',
-                fontSize: 8,
-              }}
-            >
-              📝 Notes
-            </button>
-          )}
-          
+
           <div style={{ marginLeft: 'auto', fontSize: 8, padding: '0 4px' }}>
             {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}
           </div>
