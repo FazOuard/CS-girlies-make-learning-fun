@@ -71,12 +71,56 @@ The header is composed of the XP levels which get added when the user achieves s
 
 
 ## **Now the Backend!**
+The backend magic is run with Flask, which acts as the API for my Python code. All main logic sits inside the `controllers` folder. The main Flask app file (`app.py`) handles routes, the port, and global setup.
+
+### LLM PDF Analyzer Setup
+
+I coded up an Ollama PDF analyzer using the [LangChain](https://github.com/hwchase17/langchain) library, adapted from [this YouTube video](https://www.youtube.com/watch?v=WmuSEfgzcJo&list=LL&index=3). My setup is customized for my device—so it may look a bit different from the video.
+
+Step one: download the Hugging Face model file `mistral-7b-openorca.Q4_0.gguf`. You’ll find it in the `controllers` folder. The download process took a while! I tried using `wget` and a `huggingfaceinstaller.py` script, but my terminal was missing some tools. In the end, I just downloaded it through my browser and dropped it into the project.
+
+After getting the model, I set up the API and started installing all required packages. There are three main functions:  
+- Summarize the PDF  
+- Extract key points  
+- Create a quiz  
+There’s also a text area to ask the LLM anything about the file. (Be patient—the answers can be slow since it’s running locally for now!)
+
+### Installing Dependencies
+
+All required Python packages are listed in `requirements.txt`. The standard install is:
+
+
+```bash
+pip install -r requirements.txt
+```
+
+
+If any package fails, just install it directly. Some commands I used:
+
+```bash
 pip install Flask
+```
 
-pip install torch
-python test.py 
 
+For PyTorch, check your CUDA version and system. I’m on Windows and used this (from the official docs):
+
+```bash
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+```
+
+Test the install with:
 
 
-Installing collected packages: mpmath, typing-extensions, sympy, networkx, fsspec, filelock, torch, pillow, numpy, torchvision, torchaudio
+```bash
+python test.py
+```
+
+For more details, check the source files and feel free to tweak things if your setup is different!
+
+Now that everything’s set up, you can launch the backend by running:
+
+```bash
+python app.py
+```
+
+This spins up the Flask server so you can connect the frontend and start using all the features!
