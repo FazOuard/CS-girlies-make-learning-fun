@@ -65,7 +65,6 @@ const Header = () => {
   const [popupBadge, setPopupBadge] = useState(null);
   const prevLevel = useRef(level);
 
-  // Automatic popup on earning badge
   useEffect(() => {
     const milestone = BADGE_MILESTONES.find(badge => level === badge.level);
     if (milestone && lastBadgeLevel < milestone.level) {
@@ -83,7 +82,6 @@ const Header = () => {
     prevLevel.current = level;
   }, [level, lastBadgeLevel]);
 
-  // Popup auto-hide on user click
   useEffect(() => {
     if (showPopup && popupBadge) {
       const timer = setTimeout(() => setShowPopup(false), 2500);
@@ -103,7 +101,6 @@ const Header = () => {
       }}
     >
 
-      {/* XP Progress Bar */}
       <div className="flex items-center mb-2">
         <img
           src={FACE_IMG}
@@ -139,7 +136,6 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Level Display */}
       <div className="flex items-center" style={{ marginLeft: "10px", marginTop: "4px" }}>
         <img
           src={DIAMOND_IMG}
@@ -153,7 +149,6 @@ const Header = () => {
         <span style={blueFont}>Level {level}</span>
       </div>
 
-      {/* Badges Earned */}
       <div className="flex items-center mt-2">
         {earnedBadges.map((badge, idx) => (
           <div
