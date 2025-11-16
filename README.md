@@ -13,7 +13,9 @@ metaLinks:
 
 **Welcome to the Computer Science girlies repository hackathon**
 
-
+![React](https://img.shields.io/badge/react-%23FF69B4.svg?style=for-the-badge&logo=react&logoColor=%23FFF0F5) 
+![Flask](https://img.shields.io/badge/Flask-%23FF69B4.svg?style=for-the-badge&logo=react&logoColor=%23FFF0F5) 
+![Langchain](https://img.shields.io/badge/Langchain-%23FF69B4.svg?style=for-the-badge&logo=react&logoColor=%23FFF0F5) 
 
 The hackathon aim is to make learning fun, so I decided to create a video game that combines the Pomodoro technique for smarter study timing, plus an LLM powered PDF reader to boost learning and save time.
 
