@@ -1,13 +1,12 @@
 # app.py
+#test not used repo 
 from flask import Flask, jsonify, request
 from flask_cors import CORS
 from controllers.pdfloader import prepare_pipeline, get_summary, get_key_points, generate_quiz, answer_question
 import threading
 
 app = Flask(__name__)
-CORS(app)  # enable CORS so your React frontend can call easily
-
-# Build pipeline in background thread on startup to avoid blocking the server start
+CORS(app)  
 _chain = None
 
 def init_chain():
