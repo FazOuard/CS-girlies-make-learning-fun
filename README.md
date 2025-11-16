@@ -31,10 +31,7 @@ The hackathon aim is to make learning fun, so I decided to create a video game t
 Same goes for the rest of the frontend pages: The character's house, the library and the forest.
 
 * **The XP levels:** The game use XP system. You earn XP by completing certain actions, whenever you fill up your XP bar, your level goes up!\
-  I added XP and leveling to make things more rewarding and keep players coming back for more. This idea was inspired by Luis von Ahn’s TED talk, CEO of Duolingo:
-
-&#x20;[Link Dualingo![Play Video](https://upload.wikimedia.org/wikipedia/commons/7/7e/Play_button_icon.png)](https://www.youtube.com/watch?v=P6FORpg0KVo)
-
+  I added XP and leveling to make things more rewarding and keep players coming back for more. This idea was inspired by Luis von Ahn’s TED talk, CEO of Duolingo:[Play Video](https://upload.wikimedia.org/wikipedia/commons/7/7e/Play_button_icon.png)](https://www.youtube.com/watch?v=P6FORpg0KVo)
 
 
 * **The Header:**&#x41;t the top of the game, you’ll find the header, it shows your current XP bar, your level, and achievement badges.\
