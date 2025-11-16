@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# controllers/pdfloader.py
 import os
 import torch
 from typing import List, Dict, Any
@@ -14,19 +12,18 @@ import logging
 
 logger = logging.getLogger(__name__)
 
-# ---------- Config ----------
+
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
-# Try to find the model - either locally or download from HuggingFace
+
 def get_model_path():
     """Get or download the GGUF model"""
-    # Check if it's in the root directory
+  
     local_path = r"./mistral-7b-openorca.Q4_0.gguf"
     if os.path.exists(local_path):
         logger.info(f"Found model at: {local_path}")
         return local_path
-    
-    # Try to download from HuggingFace
+ 
     try:
         from huggingface_hub import hf_hub_download
         logger.info("Downloading model from HuggingFace...")
@@ -41,7 +38,7 @@ def get_model_path():
         return None
 
 MODEL_PATH = get_model_path()
-# ----------------------------
+
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 logger.info(f"Using device: {device}")
@@ -60,11 +57,10 @@ class SimpleChain:
             question = query_dict.get("question", "")
             logger.info(f"Processing query: {question[:50]}...")
             
-            # Retrieve relevant documents
+            
             docs = self.retriever.invoke(question)
             context = "\n".join([doc.page_content for doc in docs])
             
-            # Build prompt
             prompt = f"""Based on the following context from the PDF, answer the question.
 
 Context:
@@ -75,11 +71,10 @@ Question: {question}
 Answer:"""
             
             logger.info("Invoking LLM...")
-            # Get response from LLM
+            
             response = self.llm.invoke(prompt)
             logger.info(f"LLM response received: {len(str(response))} chars")
             
-            # Store in chat history
             self.chat_history.append({
                 "question": question,
                 "answer": response
@@ -99,7 +94,6 @@ def load_and_chunk(pdf_path: str, chunk_size: int = 10000, chunk_overlap: int = 
         
         logger.info(f"📄 Loading PDF: {pdf_path}")
         
-        # Load PDF with pypdf
         pdf_reader = pypdf.PdfReader(pdf_path)
         
         if len(pdf_reader.pages) == 0:
@@ -107,7 +101,6 @@ def load_and_chunk(pdf_path: str, chunk_size: int = 10000, chunk_overlap: int = 
         
         logger.info(f"📖 Found {len(pdf_reader.pages)} pages")
         
-        # Extract text from all pages
         full_text = ""
         for page_num, page in enumerate(pdf_reader.pages):
             text = page.extract_text()
@@ -119,10 +112,9 @@ def load_and_chunk(pdf_path: str, chunk_size: int = 10000, chunk_overlap: int = 
             logger.warning("PDF text extraction returned empty content")
             full_text = "PDF content could not be extracted"
         
-        # Create a Document object for langchain compatibility
+        
         docs = [Document(page_content=full_text, metadata={"source": pdf_path})]
         
-        # Split into chunks
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size, 
             chunk_overlap=chunk_overlap
@@ -185,8 +177,8 @@ def create_llm():
             f16_kv=True,
             verbose=False,
             n_ctx=4096,
-            n_threads=8,  # Adjust based on your CPU
-            n_gpu_layers=32  # Adjust if you have GPU
+            n_threads=8,  
+            n_gpu_layers=32  
         )
         
         logger.info("✅ GGUF model loaded successfully")
@@ -213,7 +205,7 @@ def create_conversational_chain(llm, vector_store):
         raise
 
 
-# ---------- High-level operations ----------
+
 
 def get_summary(chain: SimpleChain, short: bool = False) -> str:
     """Generate summary from document"""
@@ -255,7 +247,7 @@ import re
 def generate_quiz(chain: SimpleChain, n_questions: int = 5) -> list:
     """Generate multiple-choice quiz from document"""
     try:
-        # More explicit prompt with clear examples
+        
         prompt = f"""Based on the PDF content, create exactly {n_questions} multiple-choice questions.
 
 IMPORTANT: Return ONLY a valid JSON object, no extra text before or after.
@@ -302,10 +294,8 @@ Generate {n_questions} questions now in the exact JSON format shown above."""
         
         logger.info(f"Raw LLM response: {res_str[:200]}...")
         
-        # Try multiple extraction strategies
         quiz = None
         
-        # Strategy 1: Direct JSON parse
         try:
             parsed = json.loads(res_str)
             quiz = parsed.get("quiz", [])
@@ -314,7 +304,6 @@ Generate {n_questions} questions now in the exact JSON format shown above."""
         except json.JSONDecodeError:
             logger.warning("Direct JSON parse failed, trying regex extraction")
         
-        # Strategy 2: Extract JSON with regex
         if not quiz:
             match = re.search(r'\{[^{}]*"quiz"\s*:\s*\[.*?\]\s*\}', res_str, re.DOTALL)
             if match:
@@ -326,7 +315,6 @@ Generate {n_questions} questions now in the exact JSON format shown above."""
                 except json.JSONDecodeError:
                     logger.warning("Regex extracted JSON is invalid")
         
-        # Strategy 3: Find any JSON array
         if not quiz:
             match = re.search(r'\[(?:[^[\]]|\[[^\]]*\])*\]', res_str, re.DOTALL)
             if match:
@@ -337,11 +325,10 @@ Generate {n_questions} questions now in the exact JSON format shown above."""
                 except json.JSONDecodeError:
                     logger.warning("Array extraction failed")
         
-        # Validate and fix quiz structure
         if quiz and isinstance(quiz, list):
             validated_quiz = []
             for i, item in enumerate(quiz):
-                # Ensure each question has required fields
+               
                 if not isinstance(item, dict):
                     continue
                 
@@ -350,20 +337,18 @@ Generate {n_questions} questions now in the exact JSON format shown above."""
                 answer = item.get("answer")
                 explanation = item.get("explanation") or "Check the document for details."
                 
-                # Validate options
+                
                 if not isinstance(options, list) or len(options) < 2:
                     continue
                 
-                # Ensure we have 4 options
                 while len(options) < 4:
                     options.append(f"Additional option {len(options) + 1}")
                 options = options[:4]
                 
-                # Validate answer index
                 if answer is None:
                     answer = 0
                 elif isinstance(answer, str):
-                    # Try to convert letter to index (A->0, B->1, etc)
+                    
                     letter_map = {'A': 0, 'B': 1, 'C': 2, 'D': 3}
                     answer = letter_map.get(answer.upper(), 0)
                 else:
@@ -380,20 +365,18 @@ Generate {n_questions} questions now in the exact JSON format shown above."""
                 logger.info(f"✅ Returning {len(validated_quiz)} validated questions")
                 return validated_quiz
         
-        # If all strategies failed, return enhanced fallback
         logger.warning("All parsing strategies failed, using fallback quiz")
         raise ValueError("Could not parse quiz from LLM response")
         
     except Exception as e:
         logger.error(f"Quiz generation error: {e}")
-        # Enhanced fallback quiz based on document
+        
         try:
-            # Try to get at least some context from the document
+            
             context_prompt = "What are the 4 main topics or concepts discussed in this PDF? List them briefly."
             context_res = chain.run({"question": context_prompt})
             context_str = str(context_res)
             
-            # Extract topics
             topics = [line.strip() for line in context_str.split('\n') if line.strip()][:4]
             
             if len(topics) >= 2:
@@ -408,7 +391,6 @@ Generate {n_questions} questions now in the exact JSON format shown above."""
         except:
             pass
         
-        # Final fallback
         return [
             {
                 "q": "Based on the document, what would you say is the primary focus?",
@@ -432,7 +414,6 @@ def answer_question(chain: SimpleChain, question: str) -> str:
         return f"Error answering question: {str(e)}"
 
 
-# ---------- Main pipeline ----------
 
 def prepare_pipeline(pdf_path: str, persist_dir: str = None):
     """Build complete pipeline: load PDF, chunk, embed, create chain"""
