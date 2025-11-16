@@ -1,8 +1,6 @@
 ---
 icon: hand-wave
-metaLinks:
-  alternates:
-    - https://app.gitbook.com/s/yE16Xb3IemPxJWydtPOj/
+metaLinks: {}
 ---
 
 # FAZ's World: CS Girlies Hackathon
@@ -13,19 +11,11 @@ metaLinks:
 
 **Welcome to the Computer Science girlies repository hackathon**
 
-
 The hackathon aim is to make learning fun, so I decided to create a video game that combines the Pomodoro technique for smarter study timing, plus an LLM powered PDF reader to boost learning and save time.
 
+<div align="left"><img src="https://img.shields.io/badge/React-18.0-blue?style=flat-square&#x26;logo=react" alt="React"> <img src="https://img.shields.io/badge/Flask-3.0-orange?style=flat-square&#x26;logo=flask" alt="Flask"></div>
 
-![React](https://img.shields.io/badge/React-18.0-blue?style=flat-square&logo=react) 
-![Flask](https://img.shields.io/badge/Flask-3.0-orange?style=flat-square&logo=flask) 
-
-
-![Langchain](https://img.shields.io/badge/Langchain-1.0-green?style=flat-square&logo=langchain)
-![Python](https://img.shields.io/badge/Python-3.8+-blue?style=flat-square&logo=python)
-![Vite](https://img.shields.io/badge/Vite-7.2-blueviolet?style=flat-square&logo=vite)
-![Ollama](https://img.shields.io/badge/Ollama-latest-purple?style=flat-square&logo=ollama)
-![itch.io](https://img.shields.io/badge/itch.io-game%20jam-red?style=flat-square&logo=itchdotio) 
+<div align="left"><img src="https://img.shields.io/badge/Langchain-1.0-green?style=flat-square&#x26;logo=langchain" alt="Langchain"> <img src="https://img.shields.io/badge/Python-3.8+-blue?style=flat-square&#x26;logo=python" alt="Python"> <img src="https://img.shields.io/badge/Vite-7.2-blueviolet?style=flat-square&#x26;logo=vite" alt="Vite"> <img src="https://img.shields.io/badge/Ollama-latest-purple?style=flat-square&#x26;logo=ollama" alt="Ollama"> <img src="https://img.shields.io/badge/itch.io-game%20jam-red?style=flat-square&#x26;logo=itchdotio" alt="itch.io"></div>
 
 ***
 
@@ -41,13 +31,9 @@ The hackathon aim is to make learning fun, so I decided to create a video game t
 Same goes for the rest of the frontend pages: The character's house, the library and the forest.
 
 * **The XP levels:** The game use XP system. You earn XP by completing certain actions, whenever you fill up your XP bar, your level goes up!\
-  I added XP and leveling to make things more rewarding and keep players coming back for more. This idea was inspired by Luis von Ahn’s TED talk, CEO of Duolingo:&#x20;
-
-
+  I added XP and leveling to make things more rewarding and keep players coming back for more. This idea was inspired by Luis von Ahn’s TED talk, CEO of Duolingo:
 
 {% embed url="https://www.youtube.com/watch?v=P6FORpg0KVo" %}
-
-
 
 * **The Header:**&#x41;t the top of the game, you’ll find the header, it shows your current XP bar, your level, and achievement badges.\
   For every 5 levels you reach, you unlock a new badge in your collection.
@@ -55,8 +41,6 @@ Same goes for the rest of the frontend pages: The character's house, the library
   You’ll get 25 minutes of focused study time, following the Pomodoro technique.\
   After the timer hits zero, a pop-up will show up telling you to take a 5-minute break.\
   Finishing a full Pomodoro earns you +3 XP for your user!
-
-
 
 My project is made of two main parts:
 
@@ -131,11 +115,7 @@ npm install
 
 _The link to the pixel art and icons, I used, is : https://kamisama887.itch.io/lorenz-fries-school-horror_
 
-
-
 _Link from where I got my pixel icons: https://www.freepik.com/search?format=families\&iconType=standard\&last\_filter=query\&last\_value=\&query=\&type=icon_
-
-
 
 Now that everything’s set up, you can launch the frontend by running:
 
