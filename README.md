@@ -33,7 +33,9 @@ Same goes for the rest of the frontend pages: The character's house, the library
 * **The XP levels:** The game use XP system. You earn XP by completing certain actions, whenever you fill up your XP bar, your level goes up!\
   I added XP and leveling to make things more rewarding and keep players coming back for more. This idea was inspired by Luis von Ahn’s TED talk, CEO of Duolingo:
 
-{% embed url="https://www.youtube.com/watch?v=P6FORpg0KVo" %}
+&#x20;[Link Dualingo![Play Video](https://upload.wikimedia.org/wikipedia/commons/7/7e/Play_button_icon.png)](https://www.youtube.com/watch?v=P6FORpg0KVo)
+
+
 
 * **The Header:**&#x41;t the top of the game, you’ll find the header, it shows your current XP bar, your level, and achievement badges.\
   For every 5 levels you reach, you unlock a new badge in your collection.
