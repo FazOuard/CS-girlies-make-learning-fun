@@ -112,9 +112,9 @@ npm install
   * **img/** → Character sprites, backgrounds, all your visual loot.
   * **map/** → JSON files from **Tiled**. Make your own pixel maps, paint collision zones (like “red” for barriers), export as JSON and drop them here.
 
-_The link to the pixel art and icons, I used, is : https://kamisama887.itch.io/lorenz-fries-school-horror_
+_The link to the pixel art and icons, I used, is : [Package I used](https://kamisama887.itch.io/lorenz-fries-school-horror)_
 
-_Link from where I got my pixel icons: https://www.freepik.com/search?format=families\&iconType=standard\&last\_filter=query\&last\_value=\&query=\&type=icon_
+_Link from where I got my pixel icons: [Here](https://www.freepik.com/search?format=families\&iconType=standard\&last\_filter=query\&last\_value=\&query=\&type=icon)_
 
 Now that everything’s set up, you can launch the frontend by running:
 
