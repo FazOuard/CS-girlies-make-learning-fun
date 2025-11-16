@@ -7,11 +7,17 @@ metaLinks:
 
 # FAZ's World: CS Girlies Hackathon
 
+***
+
 **Hello World..!**
 
 **Welcome to the Computer Science girlies repository hackathon**
 
+
+
 The hackathon aim is to make learning fun, so I decided to create a video game that combines the Pomodoro technique for smarter study timing, plus an LLM powered PDF reader to boost learning and save time.
+
+***
 
 ## Game Concept
 
@@ -47,13 +53,15 @@ My project is made of two main parts:
 * **Frontend:** for all the UI/UX (the parts the user interacts with),
 * **Backend:** for all the technical code running behind the scenes.
 
-
+***
 
 ## Download and tools
 
 I'm going to explain to you what packages I used and how I made my code work.
 
 _All the commands shown here are run from the Windows PowerShell, right inside VS Code._
+
+***
 
 ### **Frontend First!**
 
@@ -65,6 +73,8 @@ npm create vite@latest frontend
 ```
 
 Pick: React → JavaScript → \[smash Enter until you name it "frontend"]
+
+***
 
 #### **Essential Power-Ups:**
 
@@ -123,7 +133,7 @@ Now that everything’s set up, you can launch the frontend by running:
 npm run dev
 ```
 
-
+***
 
 ### **Now the Backend!**
 
@@ -158,6 +168,8 @@ There are two main ways to get the language model talking to your backend.
 **Heads up:**\
 If you’re using Ollama to run models locally, you’ll need to have the right C++ dependencies installed on your machine. Ollama relies on bits of C++ for the backend’s speed and compatibility, so make sure those libraries are set up before you launch everything.
 
+***
+
 #### LLM PDF Analyzer Setup
 
 I coded up an Ollama PDF analyzer using the [LangChain](https://github.com/hwchase17/langchain) library, adapted from [this YouTube video](https://www.youtube.com/watch?v=WmuSEfgzcJo\&list=LL\&index=3). My setup is customized for my device, so it may look a bit different from the video.
@@ -171,6 +183,8 @@ After getting the model, I set up the API and started installing all required pa
 * Extract key points
 * Create a quiz\
   There’s also a text area to ask the LLM anything about the file. (Be patient, the answers can be slow since it’s running locally for now!)
+
+***
 
 #### Installing Dependencies
 
@@ -208,7 +222,7 @@ python app.py
 
 This spins up the Flask server so you can connect the frontend and start using all the features!
 
-
+***
 
 ## Conclusion
 
