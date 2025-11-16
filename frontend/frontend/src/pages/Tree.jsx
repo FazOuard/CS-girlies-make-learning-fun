@@ -136,8 +136,6 @@ const Tree = () => {
     // purple layer: stepping into these tiles should navigate to /game
     const purpleLayer = mapData.layers.find(l => l.name === 'purple');
     let purpleTriggered = false;
-
-    // Dialog / Wisdom Tree conversation state
     let dialogActive = false;
     let dialogDotsTimer = null;
     let dialogTypeTimer = null;

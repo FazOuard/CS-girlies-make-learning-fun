@@ -101,7 +101,7 @@ const Library = () => {
       "Librarist: chtt....",
       "Librarist: Oh! Hello there.",
       "Librarist: Welcome to the library.",
-      "Librarist: Feel free to explore and read some books, you can use the computer to organise your work on see look for the wisdom tree down!",
+      "Librarist: Feel free to explore and read some books, you can go up to use the computer to start a Pomodoro study session or look for the wisdom tree down!",
       "Librarist: Remember to keep your voice down.",
     ];
 
