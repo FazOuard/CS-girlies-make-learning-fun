@@ -19,6 +19,8 @@ The hackathon aim is to make learning fun, so I decided to create a video game t
 
 ![React](https://img.shields.io/badge/React-18.0-blue?style=flat-square&logo=react) 
 ![Flask](https://img.shields.io/badge/Flask-3.0-orange?style=flat-square&logo=flask) 
+
+
 ![Langchain](https://img.shields.io/badge/Langchain-1.0-green?style=flat-square&logo=langchain)
 ![Python](https://img.shields.io/badge/Python-3.8+-blue?style=flat-square&logo=python)
 ![Vite](https://img.shields.io/badge/Vite-7.2-blueviolet?style=flat-square&logo=vite)
