@@ -17,13 +17,13 @@ metaLinks:
 The hackathon aim is to make learning fun, so I decided to create a video game that combines the Pomodoro technique for smarter study timing, plus an LLM powered PDF reader to boost learning and save time.
 
 
-![React](https://img.shields.io/badge/React-%23FF69B4.svg?style=for-the-badge&logo=react&logoColor=%23FFF0F5) 
-![Flask](https://img.shields.io/badge/Flask-%23FF69B4.svg?style=for-the-badge&logo=flask&logoColor=%23FFF0F5) 
-![Langchain](https://img.shields.io/badge/Langchain-%23FF69B4.svg?style=for-the-badge&logo=langchain&logoColor=%23FFF0F5)
-![Python](https://img.shields.io/badge/Python-%23FF69B4.svg?style=for-the-badge&logo=python&logoColor=%23FFF0F5)
-![Vite](https://img.shields.io/badge/Vite-%23FF69B4.svg?style=for-the-badge&logo=vite&logoColor=%23FFF0F5)
-![Ollama](https://img.shields.io/badge/Ollama-%23FF69B4.svg?style=for-the-badge&logo=ollama&logoColor=%23FFF0F5)
-![itch.io](https://img.shields.io/badge/itch.io-%23FF69B4.svg?style=for-the-badge&logo=itchdotio&logoColor=%23FFF0F5) 
+![React](https://img.shields.io/badge/React-18.0-blue?style=flat-square&logo=react) 
+![Flask](https://img.shields.io/badge/Flask-3.0-orange?style=flat-square&logo=flask) 
+![Langchain](https://img.shields.io/badge/Langchain-1.0-green?style=flat-square&logo=langchain)
+![Python](https://img.shields.io/badge/Python-3.8+-blue?style=flat-square&logo=python)
+![Vite](https://img.shields.io/badge/Vite-7.2-blueviolet?style=flat-square&logo=vite)
+![Ollama](https://img.shields.io/badge/Ollama-latest-purple?style=flat-square&logo=ollama)
+![itch.io](https://img.shields.io/badge/itch.io-game%20jam-red?style=flat-square&logo=itchdotio) 
 
 ***
 
