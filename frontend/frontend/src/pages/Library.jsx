@@ -259,7 +259,6 @@ const Library = () => {
           return;
         }
 
-        // Check interactables
         for (const it of interactables) {
           const itCenterX = it.x + it.width / 2;
           const itCenterY = it.y + it.height / 2;

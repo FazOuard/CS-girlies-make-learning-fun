@@ -112,7 +112,6 @@ const Tree = () => {
 
     const keys = {};
 
-  // Build interactables from the 'blue' layer in the map (Wisdom Tree tiles)
     const interactables = [];
     const blueLayer = mapData.layers.find(l => l.name === 'blue');
     if (blueLayer && blueLayer.data) {
@@ -133,7 +132,6 @@ const Tree = () => {
 
     }
 
-    // purple layer: stepping into these tiles should navigate to /game
     const purpleLayer = mapData.layers.find(l => l.name === 'purple');
     let purpleTriggered = false;
     let dialogActive = false;
@@ -161,7 +159,7 @@ const Tree = () => {
       else if (e.key === "ArrowDown") player.direction = "front";
       else if (e.key === "ArrowLeft") player.direction = "left";
       else if (e.key === "ArrowRight") player.direction = "right";
-      // Space: advance Wisdom conversation if active and typing finished
+
       if ((e.code === 'Space' || e.key === ' ') && wisdomConversation && wisdomTypingFinished) {
         wisdomConvoIndex++;
         if (wisdomConvoIndex < wisdomConvoLines.length) {
@@ -191,13 +189,11 @@ const Tree = () => {
         }
       }
 
-      // E: interact with nearest interactable (wisdom tree)
       if (e.key && e.key.toLowerCase() === 'e') {
         const interactRange = 48;
         const px = player.x + player.width / 2;
         const py = player.y + player.height / 2;
 
-        // check interactables
         for (const it of interactables) {
           const itCenterX = it.x + it.width / 2;
           const itCenterY = it.y + it.height / 2;
@@ -205,7 +201,7 @@ const Tree = () => {
           const dy = itCenterY - py;
           const dist = Math.hypot(dx, dy);
           if (dist <= interactRange) {
-            // start Wisdom conversation
+
             wisdomConversation = true;
             wisdomConvoIndex = 0;
             dialogFullText = wisdomConvoLines[0];
@@ -238,7 +234,7 @@ const Tree = () => {
       if (e.key && ['y', 'n'].includes(e.key.toLowerCase()) && wisdomConversation && wisdomTypingFinished) {
         const key = e.key.toLowerCase();
           if (key === 'y') {
-          // accept wisdom -> open PdfWisdom modal in-place
+
           wisdomConversation = false;
           dialogActive = false;
           dialogFullText = '';
@@ -247,10 +243,10 @@ const Tree = () => {
           wisdomTypingFinished = false;
           if (dialogDotsTimer) { clearTimeout(dialogDotsTimer); dialogDotsTimer = null; }
           if (dialogTypeTimer) { clearInterval(dialogTypeTimer); dialogTypeTimer = null; }
-          // show embedded component/modal
+          
           setShowPdfWisdom(true);
         } else {
-          // decline
+          
           wisdomConversation = false;
           dialogActive = false;
           dialogFullText = '';
@@ -336,7 +332,7 @@ const Tree = () => {
       );
     }
 
-    // initialize camera centered on player - ZOOM CORRIGÉ POUR ÊTRE IDENTIQUE AU CODE LIBRARY
+   
     camera.x = player.x + player.width / 2;
     camera.y = player.y + player.height / 2;
     const baseScaleInit = Math.min(
@@ -351,23 +347,19 @@ const Tree = () => {
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update player and animations first
+      
       movePlayer();
       animateFrames();
 
-      // Camera target is player's center
       const targetX = player.x + player.width / 2;
       const targetY = player.y + player.height / 2;
 
-      // Smooth camera movement (lerp)
       const smoothFactor = 0.15;
       camera.x += (targetX - camera.x) * smoothFactor;
       camera.y += (targetY - camera.y) * smoothFactor;
 
-  // Check purple trigger (navigation) each frame
   checkPurpleTrigger();
 
-      // Compute view size in world coords and clamp camera to map bounds
       const viewW = canvas.width / camera.scale;
       const viewH = canvas.height / camera.scale;
       const halfViewW = viewW / 2;
@@ -381,7 +373,6 @@ const Tree = () => {
       if (worldH <= viewH) camera.y = worldH / 2;
       else camera.y = Math.min(Math.max(camera.y, halfViewH), worldH - halfViewH);
 
-      // Apply camera transform and draw world + player
       ctx.save();
       const cx = canvas.width / 2;
       const cy = canvas.height / 2;
@@ -392,7 +383,6 @@ const Tree = () => {
       ctx.drawImage(background, 0, 0, worldW, worldH);
       drawSprite();
 
-      // Draw interactable prompt if player is near any interactable
       const interactRange = 48;
       let nearby = null;
       for (const it of interactables) {
@@ -406,7 +396,6 @@ const Tree = () => {
 
       ctx.restore();
 
-      // draw prompt in screen space above player or object
       if (nearby) {
         const cx = canvas.width / 2;
         const screenX = (nearby.x - camera.x) * camera.scale + cx + nearby.width/2 * camera.scale;
@@ -423,7 +412,6 @@ const Tree = () => {
         ctx.restore();
       }
 
-      // draw dialog overlay if active
       if (dialogActive || wisdomConversation) {
         ctx.save();
         ctx.resetTransform && ctx.resetTransform();
@@ -468,17 +456,16 @@ const Tree = () => {
       requestAnimationFrame(animate);
     }
 
-    // check purple collision per-frame (player stepped onto purple zone)
     function checkPurpleTrigger() {
       if (!purpleLayer || purpleTriggered) return;
-      // compute player's central tile
+   
       const cx = Math.floor((player.x + player.width/2) / tileSize);
       const cy = Math.floor((player.y + player.height/2) / tileSize);
       if (cx < 0 || cy < 0 || cx >= mapWidth || cy >= mapHeight) return;
       const idx = cy * mapWidth + cx;
       if (purpleLayer.data && purpleLayer.data[idx] && purpleLayer.data[idx] !== 0) {
         purpleTriggered = true;
-        // start leaving dialog with typewriter and navigate
+        
         dialogFullText = 'Leaving...';
         dialogShownText = '...';
         dialogActive = true;
@@ -502,7 +489,6 @@ const Tree = () => {
       }
     }
 
-    // small helper: draw rounded rect
     function roundRect(ctx, x, y, w, h, r, fill, stroke) {
       if (typeof r === 'number') r = { tl: r, tr: r, br: r, bl: r };
       ctx.beginPath();
@@ -520,7 +506,6 @@ const Tree = () => {
       if (stroke) ctx.stroke();
     }
 
-    // small helper: wrap text in canvas
     function wrapText(ctx, text, x, y, maxWidth, lineHeight) {
       if (!text) return;
       const words = text.split(' ');

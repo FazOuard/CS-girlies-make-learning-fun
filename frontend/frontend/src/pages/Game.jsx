@@ -235,7 +235,7 @@ useEffect(() => {
           }
         }, stepType);
       } else {
-        // end conversation
+        
         npcConversation = false;
         dialogActive = false;
         dialogFullText = '';
