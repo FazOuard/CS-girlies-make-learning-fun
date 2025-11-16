@@ -49,11 +49,13 @@ My project is made of two main parts:
 
 
 
+## Download and tools
+
 I'm going to explain to you what packages I used and how I made my code work.
 
 _All the commands shown here are run from the Windows PowerShell, right inside VS Code._
 
-## **Frontend First!**
+### **Frontend First!**
 
 Built on **ReactJS** (with Vite for speed and TailwindCSS for style).\
 Here’s the super-fast, no-nonsense install:
@@ -64,7 +66,7 @@ npm create vite@latest frontend
 
 Pick: React → JavaScript → \[smash Enter until you name it "frontend"]
 
-### **Essential Power-Ups:**
+#### **Essential Power-Ups:**
 
 Once you get into the "frontend" folder with:
 
@@ -123,7 +125,7 @@ npm run dev
 
 
 
-## **Now the Backend!**
+### **Now the Backend!**
 
 The backend magic is run with Flask, which acts as the API for my Python code. All main logic sits inside the `controllers` folder. The main Flask app file (`app.py`) handles routes, the port, and global setup.
 
