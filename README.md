@@ -16,14 +16,13 @@ metaLinks:
 
 The hackathon aim is to make learning fun, so I decided to create a video game that combines the Pomodoro technique for smarter study timing, plus an LLM powered PDF reader to boost learning and save time.
 
-![badge-name](https://img.shields.io/badge/label-message-color.svg)
 
-![React](https://img.shields.io/badge/React-18.0-blue?style=flat-square&logo=react)
+![React](https://img.shields.io/badge/React-%23FF69B4.svg?style=for-the-badge&logo=react&logoColor=%23FFF0F5) 
 ![Flask](https://img.shields.io/badge/Flask-%23FF69B4.svg?style=for-the-badge&logo=flask&logoColor=%23FFF0F5) 
 ![Langchain](https://img.shields.io/badge/Langchain-%23FF69B4.svg?style=for-the-badge&logo=langchain&logoColor=%23FFF0F5)
-![Python](https://img.shields.io/badge/python-%23FF69B4.svg?style=for-the-badge&logo=python&logoColor=%23FFF0F5)
-![Vite](https://img.shields.io/badge/vite-%23FF69B4.svg?style=for-the-badge&logo=vite&logoColor=%23FFF0F5)
-![Ollama](https://img.shields.io/badge/ollama-%23FF69B4.svg?style=for-the-badge&logo=ollama&logoColor=%23FFF0F5)
+![Python](https://img.shields.io/badge/Python-%23FF69B4.svg?style=for-the-badge&logo=python&logoColor=%23FFF0F5)
+![Vite](https://img.shields.io/badge/Vite-%23FF69B4.svg?style=for-the-badge&logo=vite&logoColor=%23FFF0F5)
+![Ollama](https://img.shields.io/badge/Ollama-%23FF69B4.svg?style=for-the-badge&logo=ollama&logoColor=%23FFF0F5)
 ![itch.io](https://img.shields.io/badge/itch.io-%23FF69B4.svg?style=for-the-badge&logo=itchdotio&logoColor=%23FFF0F5) 
 
 ***
