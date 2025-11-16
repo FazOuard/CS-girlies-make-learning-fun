@@ -13,7 +13,7 @@ metaLinks:
 
 The hackathon aim is to make learning fun, so I decided to create a video game that combines the Pomodoro technique for smarter study timing, plus an LLM powered PDF reader to boost learning and save time.
 
-#### Game Concept
+## Game Concept
 
 * **Start Screen:** Pick your character, hit start, and you appear centered on the map.
 * **Characters:** Each direction (front/back/left/right) has its own sprite, so your player walks and animates like a classic RPG. NPCs (like your sister) can have their own little animation cycles!
@@ -49,7 +49,7 @@ My project is made of two main parts:
 
 
 
-I'm going to explain to you what packages I used, how I made it work and the concept behind my code.
+I'm going to explain to you what packages I used and how I made my code work.
 
 _All the commands shown here are run from the Windows PowerShell, right inside VS Code._
 
@@ -205,6 +205,8 @@ python app.py
 ```
 
 This spins up the Flask server so you can connect the frontend and start using all the features!
+
+
 
 ## Conclusion
 
