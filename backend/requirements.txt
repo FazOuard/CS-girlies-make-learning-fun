@@ -9,7 +9,7 @@ langchain-chroma==1.0.0
 chromadb==0.4.24
 pypdf==4.0.1
 sentence-transformers==2.2.2
-torch==2.1.2
+torch==torch==2.2.0
 huggingface-hub==0.20.3
 numpy==1.24.3
 python-dotenv==1.0.0
