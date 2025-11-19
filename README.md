@@ -9,7 +9,7 @@ metaLinks: {}
 
 **Hello World..!**
 
-**Welcome to the Computer Science girlies repository hackathon**
+**Welcome to the Computer Science girlies repository hackathon!**
 
 The hackathon aim is to make learning fun, so I decided to create a video game that combines the Pomodoro technique for smarter study timing, plus an LLM powered PDF reader to boost learning and save time.
 
@@ -32,8 +32,6 @@ Same goes for the rest of the frontend pages: The character's house, the library
 
 * **The XP levels:** The game use XP system. You earn XP by completing certain actions, whenever you fill up your XP bar, your level goes up!\
   I added XP and leveling to make things more rewarding and keep players coming back for more. This idea was inspired by Luis von Ahn’s TED talk, CEO of Duolingo: [The video Link](https://www.youtube.com/watch?v=P6FORpg0KVo)
-
-
 * **The Header:**&#x41;t the top of the game, you’ll find the header, it shows your current XP bar, your level, and achievement badges.\
   For every 5 levels you reach, you unlock a new badge in your collection.
 * **The computer:** When the character enters the library and presses "E" to use the laptop, a timer will appear.\
@@ -112,9 +110,9 @@ npm install
   * **img/** → Character sprites, backgrounds, all your visual loot.
   * **map/** → JSON files from **Tiled**. Make your own pixel maps, paint collision zones (like “red” for barriers), export as JSON and drop them here.
 
-_The link to the pixel art and icons, I used, is : [Package I used](https://kamisama887.itch.io/lorenz-fries-school-horror)_
+_The link to the pixel art and icons, I used, is :_ [_Package I used_](https://kamisama887.itch.io/lorenz-fries-school-horror)
 
-_Link from where I got my pixel icons: [Here](https://www.freepik.com/search?format=families\&iconType=standard\&last\_filter=query\&last\_value=\&query=\&type=icon)_
+_Link from where I got my pixel icons:_ [_Here_](https://www.freepik.com/search?format=families\&iconType=standard\&last_filter=query\&last_value=\&query=\&type=icon)
 
 Now that everything’s set up, you can launch the frontend by running:
 

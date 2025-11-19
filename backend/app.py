@@ -24,6 +24,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
+@app.route("/")
+def index():
+    return "Hello from Flask!"
 
 # Configuration CORS
 CORS(app, resources={
