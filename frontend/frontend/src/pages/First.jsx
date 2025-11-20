@@ -10,12 +10,6 @@ const characters = [
     name: 'Faz',
     description: 'Smart and Brave',
     img: first
-  },
-  {
-    id: 2,
-    name: 'HeroMax',
-    description: 'Strong and Loyal',
-    img: first
   }
 ];
 
@@ -106,7 +100,7 @@ const First = () => {
             >
               ← Back
             </button>
-            <h2 className="pixel-title">Choose Your Hero</h2>
+            <h2 className="pixel-title">Your Hero</h2>
             <div style={{ display: 'flex', justifyContent: 'center', gap: '1.5em', marginBottom: '1em' }}>
               {characters.map((char) => (
                 <div
