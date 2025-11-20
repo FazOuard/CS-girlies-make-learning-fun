@@ -8,6 +8,11 @@ import sakura from '../assets/img/sakura_14827880.png';
 import sunflower from '../assets/img/sunflower_14827813.png';
 import forest from '../assets/img/forest.png';
 
+// Audio icons and sound file
+import speaker from '../assets/img/speaker.png';
+import mute from '../assets/img/mute.png';
+import bgSound from '../assets/audio/background.mp3';
+
 const STAR_IMG = star;
 const FACE_IMG = face;
 const DIAMOND_IMG = diamond;
@@ -65,6 +70,19 @@ const Header = () => {
   const [popupBadge, setPopupBadge] = useState(null);
   const prevLevel = useRef(level);
 
+  // AUDIO TOGGLE
+  const [audioOn, setAudioOn] = useState(true);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioOn && audioRef.current) {
+      audioRef.current.volume = 0.5;
+      audioRef.current.play().catch(() => {});
+    } else if (!audioOn && audioRef.current) {
+      audioRef.current.pause();
+    }
+  }, [audioOn]);
+
   useEffect(() => {
     const milestone = BADGE_MILESTONES.find(badge => level === badge.level);
     if (milestone && lastBadgeLevel < milestone.level) {
@@ -97,85 +115,119 @@ const Header = () => {
         position: "absolute",
         top: 0,
         left: 0,
-        padding: "16px"
+        width: "100vw",
+        padding: "16px",
+        zIndex: 1000
       }}
     >
-
-      <div className="flex items-center mb-2">
-        <img
-          src={FACE_IMG}
-          alt="XP Star"
-          style={{
-            width: "70px",
-            height: "59px",
-            imageRendering: "pixelated"
-          }}
-        />
-        <div
-          style={{
-            width: "160px",
-            height: "24px",
-            border: "2px solid #333",
-            marginLeft: "8px",
-            background: "#fff",
-            borderRadius: "6px",
-            overflow: "hidden",
-            position: "relative"
-          }}
-        >
-          <div
+      {/* HEADER INFO LEFT */}
+      <div>
+        {/* LEVEL & PROGRESS BAR */}
+        <div className="flex items-center mb-2">
+          <img
+            src={FACE_IMG}
+            alt="XP Star"
             style={{
-              background: "linear-gradient(90deg, #f9dd4e 80%, #ffad34)",
-              height: "100%",
-              width: `${160 * progress}px`,
-              transition: "width 0.25s",
-              boxShadow: "inset 0 0 6px #e7af18",
-              borderRight: progress === 1 ? "none" : "2px solid #d8b300"
+              width: "70px",
+              height: "59px",
+              imageRendering: "pixelated"
             }}
           />
+          <div
+            style={{
+              width: "160px",
+              height: "24px",
+              border: "2px solid #333",
+              marginLeft: "8px",
+              background: "#fff",
+              borderRadius: "6px",
+              overflow: "hidden",
+              position: "relative"
+            }}
+          >
+            <div
+              style={{
+                background: "linear-gradient(90deg, #f9dd4e 80%, #ffad34)",
+                height: "100%",
+                width: `${160 * progress}px`,
+                transition: "width 0.25s",
+                boxShadow: "inset 0 0 6px #e7af18",
+                borderRight: progress === 1 ? "none" : "2px solid #d8b300"
+              }}
+            />
+          </div>
+        </div>
+        {/* LEVEL */}
+        <div className="flex items-center" style={{ marginLeft: "10px", marginTop: "4px" }}>
+          <img
+            src={DIAMOND_IMG}
+            alt="Level Diamond"
+            style={{
+              width: "32px",
+              height: "32px",
+              imageRendering: "pixelated"
+            }}
+          />
+          <span style={blueFont}>Level {level}</span>
+        </div>
+        {/* BADGES */}
+        <div className="flex items-center mt-2">
+          {earnedBadges.map((badge) => (
+            <div
+              key={badge.level}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                marginRight: "14px",
+                marginLeft: "10px",
+                marginTop: "4px",
+                cursor: "pointer"
+              }}
+              onClick={() => {
+                setPopupBadge(badge);
+                setShowPopup(true);
+              }}
+            >
+              <img src={badge.img} alt={badge.label} style={{
+                width: "28px",
+                height: "28px",
+                imageRendering: "pixelated",
+                position: "relative"
+              }} />
+            </div>
+          ))}
         </div>
       </div>
 
-      <div className="flex items-center" style={{ marginLeft: "10px", marginTop: "4px" }}>
+      {/* AUDIO ICON - ABSOLUTE TOP RIGHT */}
+      <div
+        style={{
+          position: "absolute",
+          top: 20,
+          right: 70,
+          zIndex: 2000,
+          display: "flex",
+          alignItems: "center"
+        }}
+      >
         <img
-          src={DIAMOND_IMG}
-          alt="Level Diamond"
+          src={audioOn ? speaker : mute}
+          alt={audioOn ? "Speaker On" : "Muted"}
           style={{
             width: "32px",
             height: "32px",
-            imageRendering: "pixelated"
+            cursor: "pointer"
           }}
+          onClick={() => setAudioOn((v) => !v)}
         />
-        <span style={blueFont}>Level {level}</span>
-      </div>
-
-      <div className="flex items-center mt-2">
-        {earnedBadges.map((badge, idx) => (
-          <div
-            key={badge.level}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              marginRight: "14px",
-              marginLeft: "10px",
-              marginTop: "4px",
-              cursor: "pointer"
-            }}
-            onClick={() => {
-              setPopupBadge(badge);
-              setShowPopup(true);
-            }}
-          >
-            <img src={badge.img} alt={badge.label} style={{
-              width: "28px",
-              height: "28px",
-              imageRendering: "pixelated",
-              position: "relative"
-            }} />
-            
-          </div>
-        ))}
+        <audio
+          ref={audioRef}
+          src={bgSound}
+          loop
+          autoPlay
+          style={{ display: "none" }}
+        />
       </div>
 
       {/* Popup */}
