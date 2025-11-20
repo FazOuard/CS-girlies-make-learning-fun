@@ -135,7 +135,7 @@ const First = () => {
               className="pixel-input"
               placeholder="Enter your name..."
               maxLength={20}
-              style={{ marginBottom: '1em', width: '180px' }}
+              style={{ marginBottom: '1em', width: '180px' ,color: '#000'}}
             />
             <button
               onClick={handleStartGame}
