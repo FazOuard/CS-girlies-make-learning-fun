@@ -1,2 +1,17 @@
 flask
 gunicorn
+threading
+logging
+hashlib
+shutil
+datetime
+langchain_community
+typing
+pypdf
+langchain_core
+langchain_huggingface
+langchain_text_splitters
+langchain_chroma
+logging
+json
+typing
